@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions targetNamespace="http://servicio.upse.com" xmlns:apachesoap="http://xml.apache.org/xml-soap" xmlns:impl="http://servicio.upse.com" xmlns:intf="http://servicio.upse.com" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsdlsoap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<!--WSDL created by Apache Axis version: 1.4
+Built on Apr 22, 2006 (06:55:48 PDT)-->
+ <wsdl:types>
+  <schema elementFormDefault="qualified" targetNamespace="http://servicio.upse.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="registrousuario">
+    <complexType>
+     <sequence>
+      <element name="nombres" type="xsd:string"/>
+      <element name="apellidos" type="xsd:string"/>
+      <element name="cedula" type="xsd:string"/>
+      <element name="email" type="xsd:string"/>
+      <element name="direccion" type="xsd:string"/>
+      <element name="telefono" type="xsd:string"/>
+      <element name="id_tipousuario" type="xsd:int"/>
+      <element name="alias" type="xsd:string"/>
+      <element name="dpassword" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="registrousuarioResponse">
+    <complexType>
+     <sequence>
+      <element name="registrousuarioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+  </schema>
+ </wsdl:types>
+
+   <wsdl:message name="registrousuarioRequest">
+
+      <wsdl:part element="impl:registrousuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:message name="registrousuarioResponse">
+
+      <wsdl:part element="impl:registrousuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
+   <wsdl:portType name="ServicioWeb">
+
+      <wsdl:operation name="registrousuario">
+
+         <wsdl:input message="impl:registrousuarioRequest" name="registrousuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:registrousuarioResponse" name="registrousuarioResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:portType>
+
+   <wsdl:binding name="ServicioWebSoapBinding" type="impl:ServicioWeb">
+
+      <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="registrousuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="registrousuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="registrousuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+   </wsdl:binding>
+
+   <wsdl:service name="ServicioWebService">
+
+      <wsdl:port binding="impl:ServicioWebSoapBinding" name="ServicioWeb">
+
+         <wsdlsoap:address location="http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"/>
+
+      </wsdl:port>
+
+   </wsdl:service>
+
+</wsdl:definitions>
