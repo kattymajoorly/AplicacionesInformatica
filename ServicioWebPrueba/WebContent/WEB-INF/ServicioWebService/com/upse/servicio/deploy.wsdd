@@ -21,7 +21,10 @@
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:alias" type="tns:string"/>
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dpassword" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="registrousuario"/>
+      <operation xmlns:operNS="http://servicio.upse.com" xmlns:retNS="http://servicio.upse.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="validausuario" qname="operNS:validausuario" returnQName="retNS:validausuarioReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usu" type="tns:string"/>
+      </operation>
+      <parameter name="allowedMethods" value="registrousuario validausuario"/>
 
   </service>
 </deployment>

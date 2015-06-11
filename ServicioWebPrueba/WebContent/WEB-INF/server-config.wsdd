@@ -34,7 +34,10 @@
    <ns2:parameter qname="ns1:alias" type="xsd:string"/>
    <ns2:parameter qname="ns1:dpassword" type="xsd:string"/>
   </ns2:operation>
-  <ns1:parameter name="allowedMethods" value="registrousuario"/>
+  <ns1:operation name="validausuario" qname="ns2:validausuario" returnQName="ns2:validausuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:usu" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="registrousuario validausuario"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="ServicioWeb"/>
   <ns1:parameter name="className" value="com.upse.servicio.ServicioWeb"/>

@@ -12,12 +12,13 @@ import java.util.ArrayList;
 
 public class DBUsuario {
 	
-	public boolean nuevoUsuario(String nombres, String apellidos, String cedula, String email, String direccion, String telefono, Integer id_tipousuario, String alias, String dpassword){
-		boolean resultado=false;
+	public Integer nuevoUsuario(String nombres, String apellidos, String cedula, String email, String direccion, String telefono, Integer id_tipousuario, String alias, String dpassword){
+		Integer resultado=0;
 		
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		
+		if (!validarIngresousuario(alias))
+		{
 		//Manejo de transaccion
 		try {
 			con.setAutoCommit(false);
@@ -41,7 +42,7 @@ public class DBUsuario {
 			//si hasta aqui todo ha ido bien commit a la transaccion
 			if(num>0){
 			con.commit();
-			resultado = true;
+			resultado = 1;
 			
 			}
 			
@@ -49,6 +50,7 @@ public class DBUsuario {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			resultado=0;
 			try {
 				con.rollback();
 			} catch (SQLException e1) {
@@ -56,11 +58,56 @@ public class DBUsuario {
 				e1.printStackTrace();
 			}
 		}
-		
+		}else{
+			resultado=2;
+			
+		}
 		return resultado;
 	}
 	
-	
+	public Boolean validarIngresousuario(String usuario){
+        //busqueda de existencia de usuario 
+        //conectarse a la red
+       boolean existe = false;
+        DBManager dbm = new DBManager();
+        Connection con =dbm.getConection();
+        if(con==null){
+            System.out.println("error en conexion");
+            return existe;
+        }
+         
+        //sentencia a ejecutar
+        Statement sentencia;
+        //objeto para almacenar resultados
+        ResultSet resultados;
+        String sql = null;
+     
+        sql ="select * from datosusuario as du where du.alias= '"+usuario+"'"; 
+       
+        try{
+        sentencia =con.createStatement();
+        resultados=sentencia.executeQuery(sql);
+        
+        while(resultados.next()){
+           existe=true;
+        }
+        
+            
+          }catch (SQLException e){
+             
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+         
+        try{
+        con.close();
+        }catch (SQLException e){
+             
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
 	
 
 

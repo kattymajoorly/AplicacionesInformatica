@@ -8,7 +8,24 @@ public class ServicioWeb {
 		String resultado = "0";
 		
 		DBUsuario dbusuario = new DBUsuario();
-		Boolean r = dbusuario.nuevoUsuario(nombres, apellidos, cedula, email, direccion, telefono, id_tipousuario, alias, dpassword);
+		Integer r = dbusuario.nuevoUsuario(nombres, apellidos, cedula, email, direccion, telefono, id_tipousuario, alias, dpassword);
+		if(r==1){
+			resultado= "1";
+		}
+		if(r==2){
+			resultado= "2";
+		}
+		if(r==0){
+			resultado="0";
+		}
+		return resultado;
+	}
+	
+	public String validausuario(String usu)
+	{
+		String resultado="0";
+		DBUsuario dbusuario = new DBUsuario();
+		Boolean r = dbusuario.validarIngresousuario(usu);
 		if(r){
 			resultado= "1";
 		}else{
@@ -17,6 +34,5 @@ public class ServicioWeb {
 		
 		return resultado;
 	}
-	
 	
 }

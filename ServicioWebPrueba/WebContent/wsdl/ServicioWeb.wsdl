@@ -26,8 +26,30 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
      </sequence>
     </complexType>
    </element>
+   <element name="validausuario">
+    <complexType>
+     <sequence>
+      <element name="usu" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="validausuarioResponse">
+    <complexType>
+     <sequence>
+      <element name="validausuarioReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
   </schema>
  </wsdl:types>
+
+   <wsdl:message name="validausuarioRequest">
+
+      <wsdl:part element="impl:validausuario" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
 
    <wsdl:message name="registrousuarioRequest">
 
@@ -45,6 +67,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="validausuarioResponse">
+
+      <wsdl:part element="impl:validausuarioResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="ServicioWeb">
 
       <wsdl:operation name="registrousuario">
@@ -54,6 +84,18 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
        </wsdl:input>
 
          <wsdl:output message="impl:registrousuarioResponse" name="registrousuarioResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validausuario">
+
+         <wsdl:input message="impl:validausuarioRequest" name="validausuarioRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:validausuarioResponse" name="validausuarioResponse">
 
        </wsdl:output>
 
@@ -76,6 +118,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
          </wsdl:input>
 
          <wsdl:output name="registrousuarioResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
+
+      <wsdl:operation name="validausuario">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="validausuarioRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="validausuarioResponse">
 
             <wsdlsoap:body use="literal"/>
 
