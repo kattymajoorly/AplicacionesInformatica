@@ -1,0 +1,54 @@
+<?page title="Auto Generated index.zul"?>
+<window title="Hello World!!" border="normal" width="200px" apply="com.upse.controlador.indexcontrolador">
+
+<label value="You are using: ${desktop.webApp.version}"/>
+
+<grid width="100%">
+<rows>
+	<row>
+		<label value="Nombres:" />
+		<textbox id="textbox_nombre" constraint="no empty" />
+	</row>
+	<row>
+		<label value="Apellidos:" />
+		<textbox id="textbox_apellidos" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Cedula:" />
+		<textbox id="textbox_cedula" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Email:" />
+		<textbox id="textbox_email" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Direccion:" />
+		<textbox id="textbox_direccion" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Telefono:" />
+		<textbox id="textbox_telefono" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Alias:" />
+		<textbox id="textbox_alias" constraint="no empty" />
+	</row>
+	
+	<row>
+		<label value="Contraseña:" />
+		<textbox id="textbox_pass" constraint="no empty" />
+	</row>
+	
+	<row>
+		<button label="GUARDAR" onClick="" id="btnGuardar"/>
+	</row>
+</rows>
+</grid>
+
+
+</window>
