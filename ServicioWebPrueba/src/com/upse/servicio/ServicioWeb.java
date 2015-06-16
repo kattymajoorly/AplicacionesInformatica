@@ -9,13 +9,15 @@ public class ServicioWeb {
 		
 		DBUsuario dbusuario = new DBUsuario();
 		Integer r = dbusuario.nuevoUsuario(nombres, apellidos, cedula, email, direccion, telefono, id_tipousuario, alias, dpassword);
-		//aki
+		// 1: se ah agregado correctamente
 		if(r==1){
 			resultado= "1";
 		}
-		/*if(r==2){
+		//2: el usuario ya esta registrado
+		if(r==2){
 			resultado= "2";
-		}*/
+		}
+		//0: no se pudo ingresar
 		if(r==0){
 			resultado="0";
 		}

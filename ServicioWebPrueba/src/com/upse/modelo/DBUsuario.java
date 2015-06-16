@@ -17,7 +17,7 @@ public class DBUsuario {
 		
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
-		if (false)//!validarIngresousuario(alias))
+		if (!validarIngresousuario(alias))
 		{
 		//Manejo de transaccion
 		try {
@@ -64,7 +64,49 @@ public class DBUsuario {
 		}
 		return resultado;
 	}
-	
+	public Boolean validarIngresousuario(String usuario){
+        //busqueda de existencia de usuario 
+        //conectarse a la red
+       boolean existe = false;
+        DBManager dbm = new DBManager();
+        Connection con =dbm.getConection();
+        if(con==null){
+            System.out.println("error en conexion");
+            return existe;
+        }
+         
+        //sentencia a ejecutar
+        Statement sentencia;
+        //objeto para almacenar resultados
+        ResultSet resultados;
+        String sql = null;
+     
+        sql ="select * from datosusuario as du where du.alias= '"+usuario+"'"; 
+       
+        try{
+        sentencia =con.createStatement();
+        resultados=sentencia.executeQuery(sql);
+        
+        while(resultados.next()){
+           existe=true;
+        }
+        
+            
+          }catch (SQLException e){
+             
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+         
+        try{
+        con.close();
+        }catch (SQLException e){
+             
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        }
+        return existe;
+    }
 	
 	
 
