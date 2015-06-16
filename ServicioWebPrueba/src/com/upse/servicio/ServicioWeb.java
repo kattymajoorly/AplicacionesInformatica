@@ -9,30 +9,19 @@ public class ServicioWeb {
 		
 		DBUsuario dbusuario = new DBUsuario();
 		Integer r = dbusuario.nuevoUsuario(nombres, apellidos, cedula, email, direccion, telefono, id_tipousuario, alias, dpassword);
+		//aki
 		if(r==1){
 			resultado= "1";
 		}
-		if(r==2){
+		/*if(r==2){
 			resultado= "2";
-		}
+		}*/
 		if(r==0){
 			resultado="0";
 		}
 		return resultado;
 	}
 	
-	public String validausuario(String usu)
-	{
-		String resultado="0";
-		DBUsuario dbusuario = new DBUsuario();
-		Boolean r = dbusuario.validarIngresousuario(usu);
-		if(r){
-			resultado= "1";
-		}else{
-			resultado= "0";
-		}
-		
-		return resultado;
-	}
+	
 	
 }
