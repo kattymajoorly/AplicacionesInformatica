@@ -1,5 +1,6 @@
 package com.upse.modelo;
 
+import com.upse.entidades.DatosLogin;
 import com.upse.entidades.Persona;
 import com.upse.entidades.TipoUsuario;
 import com.upse.entidades.Usuario;
@@ -108,6 +109,56 @@ public class DBUsuario {
         return existe;
     }
 	
+	
+	public DatosLogin ingresarLogin(String user, String pass){
+		DatosLogin datosLogin = null;
+		
+		//1. Conectarse a la bdd
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		if(con == null){
+			System.out.println("Conexion es null");
+			return datosLogin;
+		}
+		
+		//2. Trabajar con la conexion
+		java.sql.Statement sentencia;
+		ResultSet resultados=null;
+		String query="select du.*, us.*,per.*, tp.* from usuario us inner join personas per on us.id_persona = per.id_persona " +
+					 "inner join tipousuario tp on us.id_tipousuario = tp.id_tipousuario " +
+					 "inner join datosusuario du on us.id_usuario = du.id_usuario " +
+					 "where du.alias ='" + user + "' and " + "du.dpassword ='" + pass + "'";
+						
+		System.out.println(query);
+		
+		//ejecutar el query
+		try {
+			sentencia = con.createStatement();
+			resultados = sentencia.executeQuery(query);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error en ejecución de sentencia");
+			e.printStackTrace();
+		}
+		
+		try {
+			//recorrero los resultados que haiga arrojado los select
+			while(resultados.next()){
+				datosLogin.setNombres(resultados.getString(""));
+				datosLogin.setApellidos(resultados.getString(""));
+				
+		
+				//usuario.setNombreUsuario(resultados.getString("usu_usuario"));
+				
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return datosLogin;
+	}
+
 	
 
 
