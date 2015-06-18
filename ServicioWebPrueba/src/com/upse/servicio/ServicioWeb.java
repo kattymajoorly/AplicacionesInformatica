@@ -1,5 +1,6 @@
 package com.upse.servicio;
 
+import com.upse.entidades.DatosLogin;
 import com.upse.modelo.DBUsuario;
 
 public class ServicioWeb {
@@ -23,7 +24,21 @@ public class ServicioWeb {
 		}
 		return resultado;
 	}
-	
+	public DatosLogin iniciosesion(String usuario, String password)
+	{
+		DatosLogin res=null;
+		
+		DBUsuario s=new DBUsuario();
+		
+		res=s.ingresarLogin(usuario, password);
+		
+		if(res!=null)
+		{
+			return res;
+		}else{
+			return null;
+		}
+	}
 	
 	
 }

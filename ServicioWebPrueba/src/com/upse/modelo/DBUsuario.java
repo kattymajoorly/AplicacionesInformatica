@@ -124,7 +124,7 @@ public class DBUsuario {
 		//2. Trabajar con la conexion
 		java.sql.Statement sentencia;
 		ResultSet resultados=null;
-		String query="select du.*, us.*,per.*, tp.* from usuario us inner join personas per on us.id_persona = per.id_persona " +
+		String query="select per.nombres, per.apellidos, per.cedula, tp.descripcion, du.alias, us.id_usuario from usuario us inner join personas per on us.id_persona = per.id_persona " +
 					 "inner join tipousuario tp on us.id_tipousuario = tp.id_tipousuario " +
 					 "inner join datosusuario du on us.id_usuario = du.id_usuario " +
 					 "where du.alias ='" + user + "' and " + "du.dpassword ='" + pass + "'";
@@ -142,14 +142,17 @@ public class DBUsuario {
 		}
 		
 		try {
-			//recorrero los resultados que haiga arrojado los select
+			//recorrer los resultados que haya arrojado los select
+			datosLogin=new DatosLogin();
+			
 			while(resultados.next()){
-				datosLogin.setNombres(resultados.getString(""));
-				datosLogin.setApellidos(resultados.getString(""));
-				
-		
-				//usuario.setNombreUsuario(resultados.getString("usu_usuario"));
-				
+				datosLogin.setNombres(resultados.getString("per.nombres"));
+				datosLogin.setApellidos(resultados.getString("per.apellidos"));
+				datosLogin.setCedula(resultados.getString("per.cedula"));
+				datosLogin.setDescripcionTipoUsuario(resultados.getString("tp.descripcion"));
+				datosLogin.setAlias(resultados.getString("du.alias"));
+				datosLogin.setId_usuario(resultados.getInt("us.id_usuario"));
+				//usuario.setNombreUsuario(resultados.getString("usu_usuario"));	
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
