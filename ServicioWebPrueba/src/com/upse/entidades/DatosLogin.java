@@ -5,18 +5,18 @@ public class DatosLogin {
 	private String nombres;
 	private String apellidos;
 	private String cedula;
-	private String descripcionTipoUsuario;
+	private String telefono;
 	private String alias;
 	private int id_usuario;
 	
 	
 	public DatosLogin(String nombres, String apellidos, String cedula,
-			String descripcionTipoUsuario, String alias, int id_usuario) {
+			String telefono, String alias, int id_usuario) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.cedula = cedula;
-		this.descripcionTipoUsuario = descripcionTipoUsuario;
+		this.telefono = telefono;
 		this.alias = alias;
 		this.id_usuario = id_usuario;
 	}
@@ -58,13 +58,13 @@ public class DatosLogin {
 	}
 
 
-	public String getDescripcionTipoUsuario() {
-		return descripcionTipoUsuario;
+	public String getTelefono() {
+		return telefono;
 	}
 
 
-	public void setDescripcionTipoUsuario(String descripcionTipoUsuario) {
-		this.descripcionTipoUsuario = descripcionTipoUsuario;
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 

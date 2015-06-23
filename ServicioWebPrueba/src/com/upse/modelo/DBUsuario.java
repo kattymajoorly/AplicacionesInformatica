@@ -110,21 +110,22 @@ public class DBUsuario {
     }
 	
 	
-	public DatosLogin ingresarLogin(String user, String pass){
+	public String ingresarLogin(String user, String pass){
 		DatosLogin datosLogin = null;
+		String cadenaLogin = "";
 		
 		//1. Conectarse a la bdd
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
 		if(con == null){
 			System.out.println("Conexion es null");
-			return datosLogin;
+			return cadenaLogin;
 		}
 		
 		//2. Trabajar con la conexion
 		java.sql.Statement sentencia;
 		ResultSet resultados=null;
-		String query="select per.nombres, per.apellidos, per.cedula, tp.descripcion, du.alias, us.id_usuario from usuario us inner join personas per on us.id_persona = per.id_persona " +
+		String query="select per.nombres, per.apellidos, per.cedula, per.telefono, du.alias, us.id_usuario from usuario us inner join personas per on us.id_persona = per.id_persona " +
 					 "inner join tipousuario tp on us.id_tipousuario = tp.id_tipousuario " +
 					 "inner join datosusuario du on us.id_usuario = du.id_usuario " +
 					 "where du.alias ='" + user + "' and " + "du.dpassword ='" + pass + "'";
@@ -149,17 +150,22 @@ public class DBUsuario {
 				datosLogin.setNombres(resultados.getString("per.nombres"));
 				datosLogin.setApellidos(resultados.getString("per.apellidos"));
 				datosLogin.setCedula(resultados.getString("per.cedula"));
-				datosLogin.setDescripcionTipoUsuario(resultados.getString("tp.descripcion"));
+				//tel 
+				datosLogin.setTelefono(resultados.getString("per.telefono"));
 				datosLogin.setAlias(resultados.getString("du.alias"));
 				datosLogin.setId_usuario(resultados.getInt("us.id_usuario"));
 				//usuario.setNombreUsuario(resultados.getString("usu_usuario"));	
 			}
+			//estructura de json - conversion 
+			cadenaLogin = "[{'nombres':'"+datosLogin.getNombres()+"', 'apellidos':'"+datosLogin.getApellidos()+"'," +
+					"'cedula': '"+datosLogin.getCedula()+"', 'telefono': '"+datosLogin.getTelefono()+"', 'alias':'"+datosLogin.getAlias()+"'," +
+					"'id_usuario':'"+datosLogin.getId_usuario()+"'}]";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return datosLogin;
+		return cadenaLogin;
 	}
 
 	

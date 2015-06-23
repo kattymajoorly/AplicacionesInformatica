@@ -20,6 +20,10 @@
       <parameter name="className" value="com.upse.servicio.ServicioWebSoapBindingImpl"/>
       <parameter name="wsdlPortType" value="ServicioWeb"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation name="iniciosesion" qname="operNS:iniciosesion" xmlns:operNS="http://servicio.upse.com" returnQName="retNS:iniciosesionReturn" xmlns:retNS="http://servicio.upse.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
+        <parameter qname="pns:usuario" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+        <parameter qname="pns:password" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
+      </operation>
       <operation name="registrousuario" qname="operNS:registrousuario" xmlns:operNS="http://servicio.upse.com" returnQName="retNS:registrousuarioReturn" xmlns:retNS="http://servicio.upse.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
         <parameter qname="pns:nombres" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:apellidos" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
@@ -31,10 +35,7 @@
         <parameter qname="pns:alias" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
         <parameter qname="pns:dpassword" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
       </operation>
-      <operation name="validausuario" qname="operNS:validausuario" xmlns:operNS="http://servicio.upse.com" returnQName="retNS:validausuarioReturn" xmlns:retNS="http://servicio.upse.com" returnType="rtns:string" xmlns:rtns="http://www.w3.org/2001/XMLSchema" soapAction="" >
-        <parameter qname="pns:usu" xmlns:pns="http://servicio.upse.com" type="tns:string" xmlns:tns="http://www.w3.org/2001/XMLSchema"/>
-      </operation>
-      <parameter name="allowedMethods" value="registrousuario validausuario"/>
+      <parameter name="allowedMethods" value="iniciosesion registrousuario"/>
 
   </service>
 </deployment>

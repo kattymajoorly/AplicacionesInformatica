@@ -24,20 +24,15 @@ public class ServicioWeb {
 		}
 		return resultado;
 	}
-	public DatosLogin iniciosesion(String usuario, String password)
+	public String iniciosesion(String usuario, String password)
 	{
-		DatosLogin res=null;
+		String res="";
 		
 		DBUsuario s=new DBUsuario();
 		
-		res=s.ingresarLogin(usuario, password);
+		res = s.ingresarLogin(usuario, password);
 		
-		if(res!=null)
-		{
-			return res;
-		}else{
-			return null;
-		}
+		return res;
 	}
 	
 	
