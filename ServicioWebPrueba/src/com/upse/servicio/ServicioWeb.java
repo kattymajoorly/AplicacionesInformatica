@@ -24,6 +24,8 @@ public class ServicioWeb {
 		}
 		return resultado;
 	}
+	
+	
 	public String iniciosesion(String usuario, String password)
 	{
 		String res="";

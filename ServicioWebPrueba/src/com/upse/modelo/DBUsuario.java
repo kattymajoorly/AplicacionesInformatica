@@ -157,9 +157,9 @@ public class DBUsuario {
 				//usuario.setNombreUsuario(resultados.getString("usu_usuario"));	
 			}
 			//estructura de json - conversion 
-			cadenaLogin = "[{'nombres':'"+datosLogin.getNombres()+"', 'apellidos':'"+datosLogin.getApellidos()+"'," +
+			cadenaLogin = "{'nombres':'"+datosLogin.getNombres()+"', 'apellidos':'"+datosLogin.getApellidos()+"'," +
 					"'cedula': '"+datosLogin.getCedula()+"', 'telefono': '"+datosLogin.getTelefono()+"', 'alias':'"+datosLogin.getAlias()+"'," +
-					"'id_usuario':'"+datosLogin.getId_usuario()+"'}]";
+					"'id_usuario':'"+datosLogin.getId_usuario()+"'}";
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

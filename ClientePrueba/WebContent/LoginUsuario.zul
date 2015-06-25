@@ -1,7 +1,7 @@
 <?page title="Login Usuario" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Login Usuario" border="normal" >
-<grid width="80%">
+<window title="Login Usuario" border="normal" width="350px" apply="com.upse.controlador.loginUsuarioControlador">
+<grid width="90%">
 <rows>
 	<row>
 		<label value="Usuario:" />
@@ -13,6 +13,11 @@
 	</row>
 	<row>
 		<button label="INGRESAR" onClick="" id="btnIngresar"/>
+	</row>
+	
+	<row>
+		<label value="" id="label_mensaje" 
+				style="color:red"/>
 	</row>
 </rows>
 </grid>
