@@ -33,10 +33,13 @@ public class DBProducto {
 	        //objeto para almacenar resultados
 	        ResultSet resultados = null;
 			String sql = null;	
+			
 			sql = "select pro.id_productos, pro.nombre_producto, cat.nombre_categoria, pro.precio, pro.stock" +
-				  "from productos pro inner join categoria cat on pro.id_categoria = cat.id_categoria and pro.nombre_producto like '%"+nombreProducto+"%'";
+					  "from productos pro inner join categoria cat on pro.id_categoria = cat.id_categoria and pro.nombre_producto like '%"+nombreProducto+"%'";
+			
 			
 			System.out.println(sql);
+			
 			
 			//ejecutar el query
 			try {
