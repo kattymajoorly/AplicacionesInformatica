@@ -6,8 +6,7 @@ public class Productos {
 	private int idCategoria;
 	private String nombre_producto;
 	private String descripcion;
-	private int stock_minimo;
-	private int stock_actual;
+	private int stock;
 	private double precio;
 	private long imagen;
 	private String estado;
@@ -21,15 +20,14 @@ public class Productos {
 
 
 	public Productos(int idProductos, int idCategoria, String nombre_producto,
-			String descripcion, int stock_minimo, int stock_actual,
+			String descripcion, int stock,
 			double precio, long imagen, String estado, Categoria categoria) {
 		super();
 		this.idProductos = idProductos;
 		this.idCategoria = idCategoria;
 		this.nombre_producto = nombre_producto;
 		this.descripcion = descripcion;
-		this.stock_minimo = stock_minimo;
-		this.stock_actual = stock_actual;
+		this.stock = stock;
 		this.precio = precio;
 		this.imagen = imagen;
 		this.estado = estado;
@@ -77,25 +75,14 @@ public class Productos {
 	}
 
 
-	public int getStock_minimo() {
-		return stock_minimo;
+	public int getStock() {
+		return stock;
 	}
 
 
-	public void setStock_minimo(int stock_minimo) {
-		this.stock_minimo = stock_minimo;
+	public void setStock(int stock) {
+		this.stock = stock;
 	}
-
-
-	public int getStock_actual() {
-		return stock_actual;
-	}
-
-
-	public void setStock_actual(int stock_actual) {
-		this.stock_actual = stock_actual;
-	}
-
 
 	public double getPrecio() {
 		return precio;
@@ -138,9 +125,8 @@ public class Productos {
 	
 	public String toJsonCDProducto() {
 		return "{'idProductos=':" + idProductos + ", 'categoria':" + categoria.toJsonCDProducto()
-				+ ", 'nombre_producto':'" + nombre_producto + "', 'descripcion':'"
-				+ descripcion + "', 'stock_minimo':'" + stock_minimo + "', 'stock_actual':"
-				+ stock_actual + ", 'precio':" + precio + ", 'imagen':'" + imagen + "}";
+				+ ", 'nombre_producto':'" + nombre_producto 
+			    + ", 'stock':" + stock + ", 'precio':" + precio + ", 'imagen':'" + imagen + "}";
 	}
 	
 	

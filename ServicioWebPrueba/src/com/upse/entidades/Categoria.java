@@ -3,7 +3,6 @@ package com.upse.entidades;
 public class Categoria {
 	
 	private int idCategoria;
-	private String descripcion;
 	private String nombre_categoria;
 	private String estado;
 	
@@ -12,11 +11,9 @@ public class Categoria {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Categoria(int idCategoria, String descripcion,
-			String nombre_categoria, String estado) {
+	public Categoria(int idCategoria, String nombre_categoria, String estado) {
 		super();
 		this.idCategoria = idCategoria;
-		this.descripcion = descripcion;
 		this.nombre_categoria = nombre_categoria;
 		this.estado = estado;
 	}
@@ -27,14 +24,6 @@ public class Categoria {
 
 	public void setIdCategoria(int idCategoria) {
 		this.idCategoria = idCategoria;
-	}
-
-	public String getDescripcion() {
-		return descripcion;
-	}
-
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
 	}
 
 	public String getNombre_categoria() {
@@ -55,7 +44,7 @@ public class Categoria {
 	
 	
 	public String toJsonCDProducto() {
-		return "{'idCategoria':" + idCategoria + ", 'descripcion':'" + descripcion
+		return "{'idCategoria':" + idCategoria
 				+ "', 'nombre_categoria':'" + nombre_categoria + "'}";
 	}
 
