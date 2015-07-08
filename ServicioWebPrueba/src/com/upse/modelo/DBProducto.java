@@ -34,7 +34,7 @@ public class DBProducto {
 	        ResultSet resultados = null;
 			String sql = null;	
 			
-			sql = "select pro.id_productos, pro.nombre_producto, cat.nombre_categoria, pro.precio, pro.stock" +
+			sql = "select pro.id_productos, pro.nombre_producto, pro.descripcion, cat.nombre_categoria, pro.precio, pro.stock" +
 					  "from productos pro inner join categoria cat on pro.id_categoria = cat.id_categoria and pro.nombre_producto like '%"+nombreProducto+"%'";
 			
 			
@@ -60,6 +60,7 @@ public class DBProducto {
 				Categoria listaCategoria = new Categoria();
 				listaProducto.setIdProductos(resultados.getInt("pro.id_productos"));
 				listaProducto.setNombre_producto(resultados.getString("pro.nombre_producto"));
+				listaProducto.setDescripcion(resultados.getString("pro.descripcion"));
 				
 				listaCategoria.setNombre_categoria(resultados.getString("cat.nombre_categoria"));
 				listaProducto.setCategoria(listaCategoria);
