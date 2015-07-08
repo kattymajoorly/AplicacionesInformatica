@@ -125,7 +125,7 @@ public class Productos {
 	
 	public String toJsonCDProducto() {
 		return "{'idProductos=':" + idProductos + ", 'categoria':" + categoria.toJsonCDProducto()
-				+ ", 'nombre_producto':'" + nombre_producto 
+				+ ", 'nombre_producto':'" + nombre_producto + ",'descripcion':'" + descripcion
 			    + ", 'stock':" + stock + ", 'precio':" + precio + ", 'imagen':'" + imagen + "}";
 	}
 	
