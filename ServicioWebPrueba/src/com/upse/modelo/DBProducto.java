@@ -34,8 +34,8 @@ public class DBProducto {
 	        ResultSet resultados = null;
 			String sql = null;	
 			
-			sql = "select pro.id_productos, pro.nombre_producto, pro.descripcion, cat.nombre_categoria, pro.precio, pro.stock" +
-					  "from productos pro inner join categoria cat on pro.id_categoria = cat.id_categoria and pro.nombre_producto like '%"+nombreProducto+"%'";
+			sql = "select pro.id_productos, pro.nombre_producto, pro.descripcion, cat.id_categoria ,cat.nombre_categoria, pro.precio, pro.stock_minimo, pro.stock_actual " +
+					"from productos pro inner join categoria cat on pro.id_categoria = cat.id_categoria and pro.nombre_producto like '%"+nombreProducto+"%'";
 			
 			
 			System.out.println(sql);
@@ -62,10 +62,12 @@ public class DBProducto {
 				listaProducto.setNombre_producto(resultados.getString("pro.nombre_producto"));
 				listaProducto.setDescripcion(resultados.getString("pro.descripcion"));
 				
+				listaCategoria.setIdCategoria(resultados.getInt("cat.id_categoria"));
 				listaCategoria.setNombre_categoria(resultados.getString("cat.nombre_categoria"));
 				listaProducto.setCategoria(listaCategoria);
 				listaProducto.setPrecio(resultados.getDouble("pro.precio"));
-				listaProducto.setStock(resultados.getInt("pro.stock"));
+				listaProducto.setStock_minimo(resultados.getInt("pro.stock_minimo"));
+				listaProducto.setStock_actual(resultados.getInt("pro.stock_actual"));
 							
 				lista.add(listaProducto);
 			}
