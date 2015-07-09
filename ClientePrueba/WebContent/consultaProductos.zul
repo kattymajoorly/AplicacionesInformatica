@@ -1,0 +1,16 @@
+<?page title="Consultar Productos" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Consultar Productos" border="none" width="90%" height="90%"
+apply ="com.upse.controlador.consultaproductosControlador">
+<! --- Busqueda por nombre del Producto --- >
+<groupbox closable="true">
+		<caption label="Búsqueda"></caption> 
+		<label value="Producto" />
+		<textbox id="textboxBusqueda"></textbox>
+		<button image="images/searchs.png" label="Buscar" 
+		id="buttonBusqueda">
+		</button>
+	</groupbox>
+	
+	</window>
+</zk>
