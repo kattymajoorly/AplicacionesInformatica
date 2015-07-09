@@ -44,8 +44,7 @@ public class Categoria {
 	
 	
 	public String toJsonCDProducto() {
-		return "{'idCategoria':" + idCategoria
-				+ "', 'nombre_categoria':'" + nombre_categoria + "'}";
+		return "{'idCategoria':" + idCategoria +",'nombre_categoria':'" + nombre_categoria + "'}";
 	}
 
 }
