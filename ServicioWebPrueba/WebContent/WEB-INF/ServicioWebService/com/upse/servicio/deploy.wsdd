@@ -10,6 +10,9 @@
       <parameter name="className" value="com.upse.servicio.ServicioWeb"/>
       <parameter name="wsdlPortType" value="ServicioWeb"/>
       <parameter name="typeMappingVersion" value="1.2"/>
+      <operation xmlns:operNS="http://servicio.upse.com" xmlns:retNS="http://servicio.upse.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="consultaProducto" qname="operNS:consultaProducto" returnQName="retNS:consultaProductoReturn" returnType="rtns:string" soapAction="">
+        <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:nombreProducto" type="tns:string"/>
+      </operation>
       <operation xmlns:operNS="http://servicio.upse.com" xmlns:retNS="http://servicio.upse.com" xmlns:rtns="http://www.w3.org/2001/XMLSchema" name="iniciosesion" qname="operNS:iniciosesion" returnQName="retNS:iniciosesionReturn" returnType="rtns:string" soapAction="">
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:usuario" type="tns:string"/>
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:password" type="tns:string"/>
@@ -25,7 +28,7 @@
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:alias" type="tns:string"/>
         <parameter xmlns:pns="http://servicio.upse.com" xmlns:tns="http://www.w3.org/2001/XMLSchema" qname="pns:dpassword" type="tns:string"/>
       </operation>
-      <parameter name="allowedMethods" value="iniciosesion registrousuario"/>
+      <parameter name="allowedMethods" value="iniciosesion registrousuario consultaProducto"/>
 
   </service>
 </deployment>

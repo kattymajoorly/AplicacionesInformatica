@@ -23,22 +23,25 @@
  <ns1:handler name="LocalResponder" type="java:org.apache.axis.transport.local.LocalResponder"/>
  <ns1:handler name="Authenticate" type="java:org.apache.axis.handlers.SimpleAuthenticationHandler"/>
  <ns1:service name="ServicioWeb" provider="java:RPC" style="wrapped" use="literal">
-  <ns2:operation name="iniciosesion" qname="ns1:iniciosesion" returnQName="ns1:iniciosesionReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
-   <ns2:parameter qname="ns1:usuario" type="xsd:string"/>
-   <ns2:parameter qname="ns1:password" type="xsd:string"/>
+  <ns2:operation name="consultaProducto" qname="ns1:consultaProducto" returnQName="ns1:consultaProductoReturn" returnType="xsd:string" soapAction="" xmlns:ns1="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:ns2="http://xml.apache.org/axis/wsdd/">
+   <ns2:parameter qname="ns1:nombreProducto" type="xsd:string"/>
   </ns2:operation>
-  <ns1:operation name="registrousuario" qname="ns2:registrousuario" returnQName="ns2:registrousuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-   <ns1:parameter qname="ns2:nombres" type="xsd:string"/>
-   <ns1:parameter qname="ns2:apellidos" type="xsd:string"/>
-   <ns1:parameter qname="ns2:cedula" type="xsd:string"/>
-   <ns1:parameter qname="ns2:email" type="xsd:string"/>
-   <ns1:parameter qname="ns2:direccion" type="xsd:string"/>
-   <ns1:parameter qname="ns2:telefono" type="xsd:string"/>
-   <ns1:parameter qname="ns2:id_tipousuario" type="xsd:int"/>
-   <ns1:parameter qname="ns2:alias" type="xsd:string"/>
-   <ns1:parameter qname="ns2:dpassword" type="xsd:string"/>
+  <ns1:operation name="iniciosesion" qname="ns2:iniciosesion" returnQName="ns2:iniciosesionReturn" returnType="xsd:string" soapAction="" xmlns:ns2="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns2:usuario" type="xsd:string"/>
+   <ns1:parameter qname="ns2:password" type="xsd:string"/>
   </ns1:operation>
-  <ns1:parameter name="allowedMethods" value="iniciosesion registrousuario"/>
+  <ns1:operation name="registrousuario" qname="ns3:registrousuario" returnQName="ns3:registrousuarioReturn" returnType="xsd:string" soapAction="" xmlns:ns3="http://servicio.upse.com" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <ns1:parameter qname="ns3:nombres" type="xsd:string"/>
+   <ns1:parameter qname="ns3:apellidos" type="xsd:string"/>
+   <ns1:parameter qname="ns3:cedula" type="xsd:string"/>
+   <ns1:parameter qname="ns3:email" type="xsd:string"/>
+   <ns1:parameter qname="ns3:direccion" type="xsd:string"/>
+   <ns1:parameter qname="ns3:telefono" type="xsd:string"/>
+   <ns1:parameter qname="ns3:id_tipousuario" type="xsd:int"/>
+   <ns1:parameter qname="ns3:alias" type="xsd:string"/>
+   <ns1:parameter qname="ns3:dpassword" type="xsd:string"/>
+  </ns1:operation>
+  <ns1:parameter name="allowedMethods" value="iniciosesion registrousuario consultaProducto"/>
   <ns1:parameter name="typeMappingVersion" value="1.2"/>
   <ns1:parameter name="wsdlPortType" value="ServicioWeb"/>
   <ns1:parameter name="className" value="com.upse.servicio.ServicioWeb"/>

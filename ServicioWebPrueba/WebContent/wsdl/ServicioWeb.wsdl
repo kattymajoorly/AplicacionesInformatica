@@ -4,6 +4,20 @@
 Built on Apr 22, 2006 (06:55:48 PDT)-->
  <wsdl:types>
   <schema elementFormDefault="qualified" targetNamespace="http://servicio.upse.com" xmlns="http://www.w3.org/2001/XMLSchema">
+   <element name="consultaProducto">
+    <complexType>
+     <sequence>
+      <element name="nombreProducto" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
+   <element name="consultaProductoResponse">
+    <complexType>
+     <sequence>
+      <element name="consultaProductoReturn" type="xsd:string"/>
+     </sequence>
+    </complexType>
+   </element>
    <element name="iniciosesion">
     <complexType>
      <sequence>
@@ -44,6 +58,14 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
   </schema>
  </wsdl:types>
 
+   <wsdl:message name="consultaProductoRequest">
+
+      <wsdl:part element="impl:consultaProducto" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:message name="registrousuarioRequest">
 
       <wsdl:part element="impl:registrousuario" name="parameters">
@@ -76,7 +98,27 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
 
    </wsdl:message>
 
+   <wsdl:message name="consultaProductoResponse">
+
+      <wsdl:part element="impl:consultaProductoResponse" name="parameters">
+
+      </wsdl:part>
+
+   </wsdl:message>
+
    <wsdl:portType name="ServicioWeb">
+
+      <wsdl:operation name="consultaProducto">
+
+         <wsdl:input message="impl:consultaProductoRequest" name="consultaProductoRequest">
+
+       </wsdl:input>
+
+         <wsdl:output message="impl:consultaProductoResponse" name="consultaProductoResponse">
+
+       </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="iniciosesion">
 
@@ -107,6 +149,24 @@ Built on Apr 22, 2006 (06:55:48 PDT)-->
    <wsdl:binding name="ServicioWebSoapBinding" type="impl:ServicioWeb">
 
       <wsdlsoap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+
+      <wsdl:operation name="consultaProducto">
+
+         <wsdlsoap:operation soapAction=""/>
+
+         <wsdl:input name="consultaProductoRequest">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:input>
+
+         <wsdl:output name="consultaProductoResponse">
+
+            <wsdlsoap:body use="literal"/>
+
+         </wsdl:output>
+
+      </wsdl:operation>
 
       <wsdl:operation name="iniciosesion">
 

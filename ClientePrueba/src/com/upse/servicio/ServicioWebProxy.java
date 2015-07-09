@@ -44,6 +44,12 @@ public class ServicioWebProxy implements com.upse.servicio.ServicioWeb {
     return servicioWeb;
   }
   
+  public java.lang.String consultaProducto(java.lang.String nombreProducto) throws java.rmi.RemoteException{
+    if (servicioWeb == null)
+      _initServicioWebProxy();
+    return servicioWeb.consultaProducto(nombreProducto);
+  }
+  
   public java.lang.String iniciosesion(java.lang.String usuario, java.lang.String password) throws java.rmi.RemoteException{
     if (servicioWeb == null)
       _initServicioWebProxy();
