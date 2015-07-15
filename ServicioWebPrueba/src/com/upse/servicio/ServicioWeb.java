@@ -4,6 +4,7 @@ package com.upse.servicio;
 import java.util.ArrayList;
 import java.util.Iterator;
 
+import com.upse.entidades.Categoria;
 import com.upse.entidades.DatosLogin;
 import com.upse.entidades.Productos;
 import com.upse.modelo.DBProducto;
@@ -49,6 +50,99 @@ public class ServicioWeb {
 		
 		DBProducto dbproductos = new DBProducto();
 		ArrayList<Productos> res = dbproductos.consultaProducto(nombreProducto);
+		
+		//lisIteraor devuelve un arreglo de todos los indices de la lista
+		//lisIterator recorre todo la lista
+		
+		//variable de tipo Iterator es para recorrer la lista
+		// se pueden usar otros metodos como for o foreach pero el mas optimo el Iterator.
+		Iterator r = res.listIterator();
+		while(r.hasNext()){
+			contador = contador + 1;
+			Productos pro = (Productos) r.next();
+			//contador ==1 para la concatenacion  xq el primer objeto no lleva coma entonces si eso es asi
+			//noce pone la coma
+			if (contador== 1){
+				resultado = resultado + pro.toJsonCDProducto();
+			}
+			
+			//si se pone contador !=1 entonces en el array se le pone la coma
+			if (contador != 1){
+				resultado = resultado + ", " +pro.toJsonCDProducto();
+			}
+			
+		}
+		return resultado + "]";
+	}
+	
+	public String consultaProductoCategoria(){
+		String resultado = "[";
+		Integer contador = 0;
+		
+		DBProducto dbproductos = new DBProducto();
+		ArrayList<Categoria> res = dbproductos.consultaProductoCategoria();
+		
+		//lisIteraor devuelve un arreglo de todos los indices de la lista
+		//lisIterator recorre todo la lista
+		
+		//variable de tipo Iterator es para recorrer la lista
+		// se pueden usar otros metodos como for o foreach pero el mas optimo el Iterator.
+		Iterator r = res.listIterator();
+		while(r.hasNext()){
+			contador = contador + 1;
+			Categoria cat = (Categoria) r.next();
+			//contador ==1 para la concatenacion  xq el primer objeto no lleva coma entonces si eso es asi
+			//noce pone la coma
+			if (contador== 1){
+				resultado = resultado + cat.toJsonCDProducto();
+			}
+			
+			//si se pone contador !=1 entonces en el array se le pone la coma
+			if (contador != 1){
+				resultado = resultado + ", " +cat.toJsonCDProducto();
+			}
+			
+		}
+		return resultado + "]";
+	}
+	
+	public String consultaProductoxCategoria(Integer idCategoria){
+		String resultado = "[";
+		Integer contador = 0;
+		
+		DBProducto dbproductos = new DBProducto();
+		ArrayList<Productos> res = dbproductos.consultaProductoxCategoria(idCategoria);
+		
+		//lisIteraor devuelve un arreglo de todos los indices de la lista
+		//lisIterator recorre todo la lista
+		
+		//variable de tipo Iterator es para recorrer la lista
+		// se pueden usar otros metodos como for o foreach pero el mas optimo el Iterator.
+		Iterator r = res.listIterator();
+		while(r.hasNext()){
+			contador = contador + 1;
+			Productos pro = (Productos) r.next();
+			//contador ==1 para la concatenacion  xq el primer objeto no lleva coma entonces si eso es asi
+			//noce pone la coma
+			if (contador== 1){
+				resultado = resultado + pro.toJsonCDProducto();
+			}
+			
+			//si se pone contador !=1 entonces en el array se le pone la coma
+			if (contador != 1){
+				resultado = resultado + ", " +pro.toJsonCDProducto();
+			}
+			
+		}
+		return resultado + "]";
+	}
+	
+	public String consultaProductoDetalle(Integer idProducto){
+		String resultado = "[";
+		Integer contador = 0;
+		
+		DBProducto dbproductos = new DBProducto();
+		ArrayList<Productos> res = dbproductos.consultaProductoDetalle(idProducto);
 		
 		//lisIteraor devuelve un arreglo de todos los indices de la lista
 		//lisIterator recorre todo la lista
