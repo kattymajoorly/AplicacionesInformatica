@@ -24,6 +24,7 @@ public class consultaproductosControlador extends GenericForwardComposer<Compone
 	Listbox listboxProductos;
 	Textbox textboxBusqueda;
 
+
 	public void onClick$buttonBusqueda(){
 		//uso del modelo
 		String respuesta="";
@@ -34,7 +35,9 @@ public class consultaproductosControlador extends GenericForwardComposer<Compone
 		try {
 			servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
 			//Producto lista= servicioprueba.buscarUsuarios(textboxBusqueda.getValue());
+			//respuesta = servicioprueba.consultaProducto(nombreProducto);
 			respuesta = servicioprueba.consultaProducto(nombreProducto);
+			
 			
 		} catch (RemoteException e) {
 			// TODO Auto-generated catch block

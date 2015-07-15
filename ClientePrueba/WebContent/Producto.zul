@@ -1,0 +1,52 @@
+<?page title="Productos" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Productos" border="none" width="80%" height="80%"
+apply ="com.upse.controlador.productoxcategoriaControlador">
+
+	<listbox mold="paging" pageSize="3" width="100%" 
+	emptyMessage="No Existen Registros" id="listboxCategoria" >
+	<listhead sizable="true" menupopup="auto">
+		<listheader label="Categoria" sort="auto(idCategoria)" visible = "false"/>
+		<listheader label="Categoria" sort="auto(nombre_categoria)" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+		<listcell label="${each.idCategoria}"/>
+		<listcell label="${each.nombre_categoria}" />
+	</listitem>
+	</template>
+	</listbox>
+	
+	<listbox mold="paging" pageSize="3" width="100%" 
+	emptyMessage="No Existen Registros" id="listboxCategoriaxProducto" >
+	<listhead sizable="true" menupopup="auto">
+		<listheader label="Producto" sort="auto(idProductos)" visible = "false"/>
+		<listheader label="Producto" sort="auto(nombre_producto)" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+		<listcell label="${each.idProductos}"/>
+		<listcell label="${each.nombre_producto}" />
+	</listitem>
+	</template>
+	</listbox>
+	
+	<listbox mold="paging" pageSize="3" width="100%" 
+	emptyMessage="No Existen Registros" id="listboxDescripcionPro" >
+	<listhead sizable="true" menupopup="auto">
+		<listheader label="Producto" sort="auto(nombre_producto)" />
+		<listheader label="Descripcion" sort="auto(descripcion)" />
+		<listheader label="Precio" sort="auto(precio)" />
+		
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+		<listcell label="${each.nombre_producto}" />
+		<listcell label="${each.descripcion}" />
+		<listcell label="${each.precio}" />
+	</listitem>
+	</template>
+	</listbox>
+
+</window>
+</zk>
