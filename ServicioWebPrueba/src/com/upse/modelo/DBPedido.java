@@ -116,5 +116,57 @@ public class DBPedido {
 
 	}
 	
-	
+	public Integer pedidoGuardado(Integer id_usuario, Date fecha, Double subtotal, Double iva, Double total, ArrayList<DetallePedido> listaDetalles){
+		Integer idCabecera = 0;
+		Integer Resultado = 0, resultadocabecera=0, resultadodetalle=0;
+		DBManager dbm = new DBManager();
+		Connection con = dbm.getConection();
+		if(con == null){
+			System.out.println("Conexion es null");
+		}
+			
+		//sentencia a ejecutar
+        Statement sentencia;
+        //objeto para almacenar resultados
+        ResultSet resultados = null;
+		String sql = null;	
+		
+		sql = "select max(id_pedidos) as idcabecera from pedidos where estado='A'";
+		
+		resultadocabecera=nuevoPedidoCabecera(id_usuario, fecha, subtotal, iva, total);
+				
+		//ejecutar el query
+		try {
+			sentencia = con.createStatement();
+			resultados = sentencia.executeQuery(sql);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			System.out.println("Error en ejecución de sentencia");
+			e.printStackTrace();
+		}
+		
+	try {
+		//recorrer los resultados que haya arrojado los select
+		//lista =new ArrayList<Productos>();
+		
+		while(resultados.next()){
+			idCabecera=resultados.getInt("idcabecera");
+		}
+	}catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resultadodetalle=nuevoPedidoDetalle(listaDetalles,idCabecera);
+		
+		if(resultadocabecera==1 && resultadodetalle==1)
+		{
+			Resultado=1;
+			
+		}else{
+			Resultado=0;
+		}
+		return Resultado;
+			
+	}
+
 }
