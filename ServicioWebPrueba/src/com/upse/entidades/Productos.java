@@ -117,9 +117,9 @@ public class Productos {
 	}
 
 	public String toJsonCDProducto() {
-		return "{'idProductos=':" + idProductos + ", 'categoria':" + categoria.toJsonCDProducto()
-				+ ", 'nombre_producto':'" + nombre_producto + ",'descripcion':'" + descripcion
-			    + ", 'stock_minimo':" + stock_minimo + ", 'stock_actual':" + stock_actual + ",'precio':" + precio + ", 'imagen':'" + imagen + "}";
+		return "{'idProductos':" + idProductos + ", 'categoria':" + categoria.toJsonCDProducto()
+				+ ", 'nombre_producto':'" + nombre_producto + "', 'descripcion':'" + descripcion + "', 'stock_minimo':" + stock_minimo + ", 'stock_actual':" 
+				+ stock_actual + ",'precio':" + precio + ", 'imagen':'" + imagen + "'}";
 	}
 	
 	
