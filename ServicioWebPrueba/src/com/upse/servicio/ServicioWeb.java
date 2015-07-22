@@ -2,11 +2,17 @@ package com.upse.servicio;
 
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
+
+import org.json.JSONArray;
+import org.json.JSONException;
 
 import com.upse.entidades.Categoria;
 import com.upse.entidades.DatosLogin;
+import com.upse.entidades.DetallePedido;
 import com.upse.entidades.Productos;
+import com.upse.modelo.DBPedido;
 import com.upse.modelo.DBProducto;
 import com.upse.modelo.DBUsuario;
 
@@ -168,5 +174,30 @@ public class ServicioWeb {
 		return resultado + "]";
 	}
 	
+	public String guardarpedido(Integer id_usuario, Date fecha, Double subtotal, Double iva, Double total, String jsondetalle){
+		String resultado = "0";
+		ArrayList<DetallePedido> listadetalle=new ArrayList<DetallePedido>();
+		JSONArray jsonn;
+		try {
+			
+			jsonn = new JSONArray(jsondetalle);
+			for (int i=0 ;i< jsonn.length(); i++){
+				Integer id_producto=jsonn.getJSONObject(i).getInt("idProductos");
+				Integer cantidad=jsonn.getJSONObject(i).getInt("cantidad");
+				Double detsubtotal=jsonn.getJSONObject(i).getDouble("subtotal");
+				DetallePedido ped= new DetallePedido();
+				ped.setIdProductos(id_producto);
+				ped.setCantidad(cantidad);
+				ped.setSubtotal(detsubtotal);
+				listadetalle.add(ped);
+			}
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+		return resultado;
+	}
 	
 }
