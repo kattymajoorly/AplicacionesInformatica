@@ -196,7 +196,16 @@ public class ServicioWeb {
 			e.printStackTrace();
 		}
 		
-		
+		DBPedido dbpedido = new DBPedido();
+		Integer r = dbpedido.pedidoGuardado(id_usuario, fecha, subtotal, iva, total, listadetalle);
+		// 1: se ah agregado correctamente
+		if(r==1){
+			resultado= "1";
+		}
+				//0: no se pudo ingresar
+		if(r==0){
+			resultado="0";
+		}
 		return resultado;
 	}
 	
