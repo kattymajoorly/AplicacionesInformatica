@@ -1,0 +1,102 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="none" width="90%" height="90%"
+apply ="com.upse.controlador.pedidocontrolador">
+<groupbox closable="true">
+<grid width="90%">
+<rows>
+	<row>
+		<label value="Cliente:" />
+		<label  value="" id="lbl_cliente"/>
+	</row>
+	<row>
+		<label value="Fecha:" />
+		<label  value="" id="lbl_fecha"/>
+	</row>
+	
+</rows>
+</grid>
+</groupbox>
+
+<groupbox closable="true">
+	
+		<label value="Producto:" />
+		<combobox autocomplete="true" id="cmbProductos"  width="100px">
+				<template name="model">
+					<comboitem label="${each.nombre_producto}" value="${each.idProductos}" />
+				</template>
+			</combobox>
+			
+		<space></space>
+
+		<label value="Cantidad:" />
+			<space></space>
+		<textbox id="textbox_cantidad" constraint="no empty" />
+		
+		<space></space>
+		
+		<label value="Precio:" />
+			<space></space>
+		<label  value="" id="lbl_precio"/>
+		
+		
+		<space></space>
+				
+		<label value="Total:" />
+			<space></space>
+		<label  value="" id="lbl_totalproducto"/>
+		
+		<space></space>
+		<space></space>
+		<space></space>
+		<space></space>
+		
+		<button label="Anadir" onClick="" id="btnAnadir"/>
+		
+		
+</groupbox>
+
+<groupbox closable="true">
+<listbox mold="paging" pageSize="3" width="100%" 
+	emptyMessage="No Existen Registros" id="listboxPedido" >
+	<listhead sizable="true" menupopup="auto">
+		<listheader label="idProductos" sort="auto(idProductos)" visible = "false"/>
+		<listheader label="Cantidad" sort="auto(cantidad)" />
+		<listheader label="Producto" sort="auto(productos.nombre_producto)" />
+		<listheader label="Precio" sort="auto(precio)" />
+		<listheader label="Total" sort="auto(subtotal)" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+		<listcell label="${each.idProductos}"/>
+		<listcell label="${each.cantidad}" />
+		<listcell label="${each.productos.nombre_producto}" />
+		<listcell label="${each.precio}" />
+		<listcell label="${each.subtotal}" />
+	</listitem>
+	</template>
+	</listbox>
+</groupbox>
+
+<groupbox closable="true">
+<grid width="20%">
+<rows>
+	<row>
+		<label value="Subtotal" />
+		<label  value="" id="lbl_subtotal"/>
+	</row>
+	<row>
+		<label value="Iva" />
+		<label  value="" id="lbl_iva"/>
+	</row>
+	<row>
+		<label value="Total" />
+		<label  value="" id="lbl_total"/>
+	</row>	
+</rows>
+</grid>
+</groupbox>
+
+<button label="Guardar" onClick="" id="btnGuardar"/>
+</window>
+</zk>
