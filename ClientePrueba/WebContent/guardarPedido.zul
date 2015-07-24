@@ -62,7 +62,7 @@ apply ="com.upse.controlador.pedidocontrolador">
 	<listhead sizable="true" menupopup="auto">
 		<listheader label="idProductos" sort="auto(idProductos)" visible = "false"/>
 		<listheader label="Cantidad" sort="auto(cantidad)" />
-		<listheader label="Producto" sort="auto(productos.nombre_producto)" />
+		<listheader label="Producto" sort="auto(nombre_producto)" />
 		<listheader label="Precio" sort="auto(precio)" />
 		<listheader label="Total" sort="auto(subtotal)" />
 	</listhead>
@@ -70,7 +70,7 @@ apply ="com.upse.controlador.pedidocontrolador">
 	<listitem value="${each}">
 		<listcell label="${each.idProductos}"/>
 		<listcell label="${each.cantidad}" />
-		<listcell label="${each.productos.nombre_producto}" />
+		<listcell label="${each.nombre_producto}" />
 		<listcell label="${each.precio}" />
 		<listcell label="${each.subtotal}" />
 	</listitem>

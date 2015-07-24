@@ -6,6 +6,8 @@ import java.rmi.RemoteException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.Iterator;
 
 import javax.xml.rpc.ServiceException;
 
@@ -35,14 +37,15 @@ import com.upse.servicio.ServicioWebSoapBindingStub;
 public class pedidocontrolador extends GenericForwardComposer<Component> {
 
 	@Wire
-	Listbox listboxPedido;
+	Listbox	 listboxPedido;
 	Label lbl_cliente, lbl_fecha, lbl_totalproducto, lbl_precio,lbl_subtotal,lbl_iva,lbl_total;
 	Button btnAnadir, btnGuardar;
 	Textbox textbox_cantidad;
 	Combobox cmbProductos;
 	ArrayList<Productos> listProductos = new ArrayList<Productos>();
 	ArrayList<DetallePedido> listDetallePedido = new ArrayList<DetallePedido>();
-
+	ArrayList<DetallePedido> ldp;
+	Integer id_usuario;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -55,10 +58,10 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 		//2.Leer atributo almacenado en la sesion
 		//convertir a objeto generico de usuario
 		
-		Integer id_usuario = (Integer) session.getAttribute("idUser");
+		id_usuario = (Integer) session.getAttribute("idUser");
 		
 		if(id_usuario!=null){
-			
+			ldp = new ArrayList<DetallePedido>();
 			String nombres = session.getAttribute("nombreU") +" "+session.getAttribute("apellidoU");
 			lbl_cliente.setValue(nombres);
 			lbl_fecha.setValue(getFechaActual());
@@ -171,21 +174,21 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 	//para anadir un nuevo product al listbox
 	public void onClick$btnAnadir(){
 		DetallePedido detallePedido = new DetallePedido();
-		Productos producto = new Productos();
+		
 		Integer idProductos=cmbProductos.getSelectedItem().getValue(); 
 		String nombre_producto = cmbProductos.getSelectedItem().getLabel();
 		
-		producto.setIdProductos(idProductos);
-		producto.setNombre_producto(nombre_producto);
-		detallePedido.setProductos(producto);
 		detallePedido.setIdProductos(idProductos);
+		detallePedido.setNombre_producto(nombre_producto);
 		detallePedido.setCantidad(Integer.parseInt(textbox_cantidad.getValue()));
 		detallePedido.setPrecio(Double.parseDouble(lbl_precio.getValue()));
 		detallePedido.setSubtotal(Double.parseDouble(lbl_totalproducto.getValue()));
 		
 		listDetallePedido.add(detallePedido);
+		ldp.add(detallePedido);
 		ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listDetallePedido);
 		listboxPedido.setModel(modeloDeDatos);
+		
 		calculartotal();
 		
 	}
@@ -199,10 +202,70 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 	        return sdf.format(c1.getTime());
 	}
 	
+	public String getFechaGuardar(){
+		Calendar c1;
+		 	c1 = Calendar.getInstance();	
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        return sdf.format(c1.getTime());
+	}
 	//para guardar pedido
 	
 	public void onClick$btnGuardar(){
+		String respuesta="";
+		ServicioWebSoapBindingStub servicioprueba;
+				
+		//Integer id_usuario, Date fecha, Double subtotal, Double iva, 
+		//Double total, String jsondetalle
+		try {
+			servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+			Double sub, iva, total;
+			String jsondetalle;
+			//lbl_subtotal,lbl_iva,lbl_total;
+			sub=Double.parseDouble(lbl_subtotal.getValue());
+			iva=Double.parseDouble(lbl_iva.getValue());
+			total=Double.parseDouble(lbl_total.getValue());
+			String cadena = "[";
+			Integer contador=0;
 		
+			for(int i=0; i<ldp.size();i++){
+				contador = contador + 1;
+				
+				if (contador== 1){
+					cadena = cadena + ldp.get(i).toJsonCDDetallePedido();
+				}
+				
+				//si se pone contador !=1 entonces en el array se le pone la coma
+				if (contador != 1){
+					cadena = cadena + ", " +ldp.get(i).toJsonCDDetallePedido();
+				}
+				
+			}
+			cadena = cadena + "]";
+		alert(cadena);
+			try {
+				respuesta = servicioprueba.guardarpedido(id_usuario, getFechaGuardar(), sub, iva, total, cadena);
+				
+				if(respuesta.equals("1")){
+					alert("Pedido Guardado :) ");
+				} else {
+					alert("No Guardado :( ");
+					
+				}
+				
+				
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
 	}
 	
 	

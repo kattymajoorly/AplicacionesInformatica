@@ -7,15 +7,10 @@ public class DetallePedido {
 	private int cantidad;
 	private double subtotal;
 	private double precio;
-	private Productos productos;
-	
+	private String nombre_producto;
 
-	public DetallePedido() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
 	public DetallePedido(int idDetallePedido, int idProductos, int idPedidos,
-			int cantidad, double subtotal, double precio, Productos productos) {
+			int cantidad, double subtotal, double precio, String nombre_producto) {
 		super();
 		this.idDetallePedido = idDetallePedido;
 		this.idProductos = idProductos;
@@ -23,9 +18,22 @@ public class DetallePedido {
 		this.cantidad = cantidad;
 		this.subtotal = subtotal;
 		this.precio = precio;
-		this.productos = productos;
-		
+		this.nombre_producto = nombre_producto;
 	}
+
+	public String getNombre_producto() {
+		return nombre_producto;
+	}
+
+	public void setNombre_producto(String nombre_producto) {
+		this.nombre_producto = nombre_producto;
+	}
+
+	public DetallePedido() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 	public int getIdDetallePedido() {
 		return idDetallePedido;
 	}
@@ -63,15 +71,13 @@ public class DetallePedido {
 	public void setPrecio(double precio) {
 		this.precio = precio;
 	}
-	
-	public Productos getProductos() {
-		return productos;
+	 
+		
+	public String toJsonCDDetallePedido() {
+		return "{'idDetallePedido':" + idDetallePedido + ",'idProductos':" + idProductos + 
+				",'idPedidos':" + idPedidos + ", 'cantidad':" + cantidad + ",'subtotal':" + subtotal + 
+				",'precio':" + precio + ", 'nombre_producto':'"+nombre_producto+"'}";
 	}
-	public void setProductos(Productos productos) {
-		this.productos = productos;
-	}
-	
-	
 	
 	
 	
