@@ -15,6 +15,7 @@ public class DBUsuario {
 	
 	public Integer nuevoUsuario(String nombres, String apellidos, String cedula, String email, String direccion, String telefono, Integer id_tipousuario, String alias, String dpassword){
 		Integer resultado=0;
+		Encriptacion encrypta = new Encriptacion("encrypta");
 		
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
@@ -24,6 +25,7 @@ public class DBUsuario {
 		try {
 			con.setAutoCommit(false);
 			String sql = null;
+			String encrypassword = encrypta.encrypt(dpassword);
 			sql="CALL sp_ingresosUsuarios (?,?,?,?,?,?,?,?,?)";
 			PreparedStatement pstm = con.prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
 			
@@ -35,7 +37,7 @@ public class DBUsuario {
 			pstm.setString(6, telefono);
 			pstm.setInt(7, id_tipousuario);
 			pstm.setString(8, alias);
-			pstm.setString(9, dpassword);
+			pstm.setString(9, encrypassword);
 		
 			
 			//retorna el numero de filas afectadas
@@ -113,7 +115,8 @@ public class DBUsuario {
 	public String ingresarLogin(String user, String pass){
 		DatosLogin datosLogin = null;
 		String cadenaLogin = "";
-		
+		Encriptacion encrypta = new Encriptacion("encrypta"); 
+		String encryp = encrypta.encrypt(pass);
 		//1. Conectarse a la bdd
 		DBManager dbm = new DBManager();
 		Connection con = dbm.getConection();
@@ -128,7 +131,7 @@ public class DBUsuario {
 		String query="select per.nombres, per.apellidos, per.cedula, per.telefono, du.alias, us.id_usuario from usuario us inner join personas per on us.id_persona = per.id_persona " +
 					 "inner join tipousuario tp on us.id_tipousuario = tp.id_tipousuario " +
 					 "inner join datosusuario du on us.id_usuario = du.id_usuario " +
-					 "where du.alias ='" + user + "' and " + "du.dpassword ='" + pass + "'";
+					 "where du.alias ='" + user + "' and " + "du.dpassword ='" + encryp + "'";
 						
 		System.out.println(query);
 		
