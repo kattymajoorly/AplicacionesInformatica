@@ -17,6 +17,7 @@ import org.zkoss.zk.ui.Component;
 import org.zkoss.zk.ui.Executions;
 import org.zkoss.zk.ui.Session;
 import org.zkoss.zk.ui.Sessions;
+import org.zkoss.zk.ui.WrongValueException;
 import org.zkoss.zk.ui.select.annotation.Wire;
 import org.zkoss.zk.ui.util.GenericForwardComposer;
 import org.zkoss.zul.Button;
@@ -24,6 +25,7 @@ import org.zkoss.zul.Combobox;
 import org.zkoss.zul.Label;
 import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
+import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
 
 import com.upse.servicio.Categoria;
@@ -184,12 +186,67 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 		detallePedido.setPrecio(Double.parseDouble(lbl_precio.getValue()));
 		detallePedido.setSubtotal(Double.parseDouble(lbl_totalproducto.getValue()));
 		
-		listDetallePedido.add(detallePedido);
-		ldp.add(detallePedido);
-		ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listDetallePedido);
-		listboxPedido.setModel(modeloDeDatos);
+			ServicioWebSoapBindingStub servicioprueba;
+			String respuesta="";
+			try {
+				servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+				respuesta = servicioprueba.validar_stock(idProductos, Integer.parseInt(textbox_cantidad.getValue()));
+				
+			} catch (MalformedURLException | ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (WrongValueException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		if(respuesta.equals("1")){
+			
+			int contador=0;
+			for(int i=0; i<ldp.size(); i++ ){
+				if(ldp.get(i).getIdProductos()==idProductos){
+					contador=contador+ldp.get(i).getCantidad();
+				}
+			}
+			alert(""+contador);
+				try {
+					servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+					respuesta = servicioprueba.validar_stock(idProductos,contador);
+					
+				} catch (MalformedURLException | ServiceException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (WrongValueException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NumberFormatException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (RemoteException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				if(respuesta.equals("1")){
+					listDetallePedido.add(detallePedido);
+					ldp.add(detallePedido);
+					ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listDetallePedido);
+					listboxPedido.setModel(modeloDeDatos);
+					calculartotal();
+				}else{
+					Messagebox.show("Cantidad sobrepasa el stock", "Error", Messagebox.OK, Messagebox.ERROR);
+				}
+			
+		}else{
+			Messagebox.show("Cantidad sobrepasa el stock", "Error", Messagebox.OK, Messagebox.ERROR);
+		}
 		
-		calculartotal();
+		
+		
 		
 	}
 	

@@ -5,7 +5,7 @@ import java.util.Date;
 public class Pedido {
 	private int idPedidos;
 	private int idUsuario;
-	private Date fecha;
+	private String fecha;
 	private double subtotal;
 	private double total_iva;
 	private double total;
@@ -16,7 +16,7 @@ public class Pedido {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Pedido(int idPedidos, int idUsuario, Date fecha, double subtotal,
+	public Pedido(int idPedidos, int idUsuario, String fecha, double subtotal,
 			double total_iva, double total, Usuario usuario) {
 		super();
 		this.idPedidos = idPedidos;
@@ -44,11 +44,11 @@ public class Pedido {
 		this.idUsuario = idUsuario;
 	}
 
-	public Date getFecha() {
+	public String getFecha() {
 		return fecha;
 	}
 
-	public void setFecha(Date fecha) {
+	public void setFecha(String fecha) {
 		this.fecha = fecha;
 	}
 
