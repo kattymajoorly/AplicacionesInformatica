@@ -174,7 +174,28 @@ public class ServicioWeb {
 		return resultado + "]";
 	}
 	
-	public String guardarpedido(Integer id_usuario, Date fecha, Double subtotal, Double iva, Double total, String jsondetalle){
+	public String validar_stock(Integer id_producto, Integer cantidad){
+		Integer sa, sm;
+		String respuesta;
+		DBPedido db=new DBPedido();
+		sm= db.stockminimo(id_producto);
+		sa= db.stockactual(id_producto);
+	
+		if(cantidad>sa)
+		{
+			respuesta = "0";
+		}else {
+			if((sa-cantidad)>=sm){
+				respuesta= "1";
+			}else{
+				respuesta = "0";
+			}
+			
+		}
+		return respuesta;
+	}
+	
+	public String guardarpedido(Integer id_usuario, String fecha, Double subtotal, Double iva, Double total, String jsondetalle){
 		String resultado = "0";
 		ArrayList<DetallePedido> listadetalle=new ArrayList<DetallePedido>();
 		JSONArray jsonn;
