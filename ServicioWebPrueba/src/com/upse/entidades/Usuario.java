@@ -73,7 +73,11 @@ public class Usuario {
 		this.tipousuario = tipousuario;
 	}
 	
+	public String toJsonCDUsuario(){
+		return "{'idUsuario':" + idUsuario + ", 'categoria':" + persona.toJsonCDPersona()
+				+ "}"; 
+	}
 	
 	
-
+	
 }

@@ -66,6 +66,11 @@ public class DetallePedido {
 		this.pedido = pedido;
 	}
 	
+	public String toJsonCDPedido() {
+		return "{'idDetallePedido':" + idDetallePedido +",'productos':" + productos.toJsonCDProducto() +", 'pedido':" + pedido.toJsonCDPedido()
+				+ ", 'cantidad':" + cantidad + ", 'subtotal':" + subtotal + "'}";
+	}	
+	
 	
 	
 	

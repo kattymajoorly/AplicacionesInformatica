@@ -95,7 +95,9 @@ public class Persona {
 	}
 	
 	
-	
+	public String toJsonCDPersona() {
+		return "{'idPersona':" + idPersona +",'nombres':'" + nombres + ", 'apellidos':'" + apellidos + ", 'cedula':'" + cedula + "'}";
+	}
 	
 	
 

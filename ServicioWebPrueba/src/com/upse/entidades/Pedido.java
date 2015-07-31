@@ -83,11 +83,11 @@ public class Pedido {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
-
 	
-	
-	
-	
-	
-
+	public String toJsonCDPedido() {
+		return "{'idPedidos':" + idPedidos +",'usuario':" + usuario.toJsonCDUsuario()
+				+ ", 'fecha':'" + fecha + "', 'subtotal':" + subtotal 
+				+ ", 'total_iva':" + total_iva 
+				+ ", 'total':" + total + "'}";
+	}	
 }
