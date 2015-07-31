@@ -9,8 +9,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import com.upse.entidades.Categoria;
+import com.upse.entidades.DatosLogin;
 import com.upse.entidades.DetallePedido;
+import com.upse.entidades.Pedido;
+import com.upse.entidades.Persona;
 import com.upse.entidades.Productos;
+import com.upse.entidades.Usuario;
 
 public class DBPedido {
 		
@@ -228,5 +232,191 @@ public class DBPedido {
 			return Resultado;
 				
 		}
+		
+	public ArrayList<Pedido> consultaPedidoxUsuario(String estadoPedido){
+						
+				ArrayList<Pedido> lista = null;
+				
+				//1. Conectarse a la bdd
+					DBManager dbm = new DBManager();
+					Connection con = dbm.getConection();
+					if(con == null){
+						System.out.println("Conexion es null");
+					}
+						
+					//sentencia a ejecutar
+			        Statement sentencia;
+			        //objeto para almacenar resultados
+			        ResultSet resultados = null;
+					String sql = null;	
+					
+					sql = "select pe.fecha as Fecha, pe.id_pedidos as NumeroFactura, pe.total as Total from pedidos pe where pe.estadoPedido="+estadoPedido;
+							
+					
+					//ejecutar el query
+					try {
+						sentencia = con.createStatement();
+						resultados = sentencia.executeQuery(sql);
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						System.out.println("Error en ejecución de sentencia");
+						e.printStackTrace();
+					}
+					
+				try {
+					//recorrer los resultados que haya arrojado los select
+					lista =new ArrayList<Pedido>();
+					
+					while(resultados.next()){
+						Pedido listaPedido = new Pedido();
+						listaPedido.setFecha(resultados.getString("Fecha"));
+						listaPedido.setIdPedidos(resultados.getInt("NumeroFactura"));
+						listaPedido.setTotal(resultados.getDouble("Total"));
+																				
+						lista.add(listaPedido);
+					}
+				}catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+				
+				return lista;
+		        
+	}
+	
+	
+	public Pedido consultaPedidoxId(Integer idPedido){
+		
+				
+		//1. Conectarse a la bdd
+			DBManager dbm = new DBManager();
+			Connection con = dbm.getConection();
+			if(con == null){
+				System.out.println("Conexion es null");
+			}
+				
+			//sentencia a ejecutar
+	        Statement sentencia;
+	        //objeto para almacenar resultados
+	        ResultSet resultados = null;
+			String sql = null;	
+			
+			sql = "select pe.fecha as Fecha, pe.id_pedidos as NumeroFactura," +
+					"per.nombres as Nombres, per.apellidos as Apellidos, " +
+					"per.cedula as Cedula, pe.subtotal as Subtotal, pe.total_iva as IVA, " +
+					"pe.total as TotalFactura from pedidos " +
+					"pe inner join usuario usu on pe.id_usuario = usu.id_usuario inner join personas per on usu.id_persona = per.id_persona" +
+					"where pe.id_pedidos="+idPedido+"";
+			
+			System.out.println(sql);
+			
+			Pedido  listaPedido = new Pedido();	
+			//ejecutar el query
+			try {
+				sentencia = con.createStatement();
+				resultados = sentencia.executeQuery(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error en ejecución de sentencia");
+				e.printStackTrace();
+			}
+			
+		try {
+			//recorrer los resultados que haya arrojado los select
+						
+			while(resultados.next()){
+				Usuario usuario = new Usuario();
+				Persona persona = new Persona();
+				
+				persona.setNombres(resultados.getString("Nombres"));
+				persona.setApellidos(resultados.getString("Apellidos"));
+				persona.setCedula(resultados.getString("Cedula"));
+				usuario.setPersona(persona);
+				
+				listaPedido.setIdPedidos(resultados.getInt("NumeroFactura"));
+				listaPedido.setFecha(resultados.getString("fecha"));
+				listaPedido.setSubtotal(resultados.getInt("Subtotal"));
+				listaPedido.setTotal_iva(resultados.getDouble("IVA"));
+				listaPedido.setTotal(resultados.getDouble("TotalFactura"));	
+				listaPedido.setUsuario(usuario);
+			
+			}
+		}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		return listaPedido;
+	    
+	}
+	
+	public ArrayList<DetallePedido> consultaPedidoxDetalle(Integer idPedido){
+		
+		ArrayList<DetallePedido> lista = null;
+		
+		//1. Conectarse a la bdd
+			DBManager dbm = new DBManager();
+			Connection con = dbm.getConection();
+			if(con == null){
+				System.out.println("Conexion es null");
+			}
+				
+			//sentencia a ejecutar
+	        Statement sentencia;
+	        //objeto para almacenar resultados
+	        ResultSet resultados = null;
+			String sql = null;	
+			
+			sql = "select pro.nombre_producto, pro.descripcion, det.cantidad, pro.precio, det.subtotal " +
+					"from pedidos pe inner join detallepedido det on pe.id_pedidos = det.id_pedidos inner join productos pro on det.id_productos = pro.id_productos" +
+					"where det.id_pedidos="+ idPedido+"";
+					
+			
+			//ejecutar el query
+			try {
+				sentencia = con.createStatement();
+				resultados = sentencia.executeQuery(sql);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				System.out.println("Error en ejecución de sentencia");
+				e.printStackTrace();
+			}
+			
+		try {
+			//recorrer los resultados que haya arrojado los select
+			lista =new ArrayList<DetallePedido>();
+			
+			while(resultados.next()){
+				
+				Productos listaProducto = new Productos();
+				DetallePedido listadetalle = new DetallePedido();
+				
+				listaProducto.setNombre_producto(resultados.getString("nombre_producto"));
+				listaProducto.setDescripcion(resultados.getString("descripcion"));
+				listaProducto.setPrecio(resultados.getDouble("precio"));
+				listadetalle.setProductos(listaProducto);
+				
+				listadetalle.setCantidad(resultados.getInt("cantidad"));
+				listadetalle.setSubtotal(resultados.getDouble("subtotal"));
+				
+																						
+				lista.add(listadetalle);
+			}
+		}catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		
+		
+		return lista;
+        
+	}
 
+	
+	
+		
+		
+			
 }
