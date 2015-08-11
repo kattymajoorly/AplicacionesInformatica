@@ -11,7 +11,9 @@ import org.json.JSONException;
 import com.upse.entidades.Categoria;
 import com.upse.entidades.DatosLogin;
 import com.upse.entidades.DetallePedido;
+import com.upse.entidades.Pedido;
 import com.upse.entidades.Productos;
+import com.upse.entidades.datosConsultaPedido;
 import com.upse.modelo.DBPedido;
 import com.upse.modelo.DBProducto;
 import com.upse.modelo.DBUsuario;
@@ -228,6 +230,79 @@ public class ServicioWeb {
 			resultado="0";
 		}
 		return resultado;
+	}
+	
+	//CONSULTAS PARA PEDIDO
+	
+	public String consultaPedidoxUsuario(String estadoPedido, Integer idUsuario){
+		String resultado = "[";
+		Integer contador = 0;
+		DBPedido dbpedido = new DBPedido();
+		ArrayList<datosConsultaPedido> res = dbpedido.consultaPedidoxUsuario(estadoPedido,idUsuario);
+		
+		
+		//lisIteraor devuelve un arreglo de todos los indices de la lista
+		//lisIterator recorre todo la lista
+		
+		//variable de tipo Iterator es para recorrer la lista
+		// se pueden usar otros metodos como for o foreach pero el mas optimo el Iterator.
+		for (int i=0;i<res.size();i++){
+			
+			if (i== 0){
+				resultado = resultado + res.get(i).toJsonCDConsulta();
+			}
+			
+			//si se pone contador !=1 entonces en el array se le pone la coma
+			if (i > 0){
+				resultado = resultado + ", " + res.get(i).toJsonCDConsulta();
+			}
+			
+		}
+		return resultado + "]";
+	}
+	
+	public String consultaPedidoxDetalle(Integer idPedido){
+		String resultado = "[";
+		Integer contador = 0;
+		DBPedido dbpedido = new DBPedido();
+		ArrayList<DetallePedido> res = dbpedido.consultaPedidoxDetalle(idPedido);
+		
+		
+		//lisIteraor devuelve un arreglo de todos los indices de la lista
+		//lisIterator recorre todo la lista
+		
+		//variable de tipo Iterator es para recorrer la lista
+		// se pueden usar otros metodos como for o foreach pero el mas optimo el Iterator.
+		for(int i = 0 ; i< res.size(); i++){
+			
+			if (i== 0){
+				resultado = resultado + res.get(i).toJsonCDPedido();
+			}
+			
+			//si se pone contador !=1 entonces en el array se le pone la coma
+			if (i > 0){
+				resultado = resultado + ", " +res.get(i).toJsonCDPedido();
+			}
+			
+		}
+		
+		return resultado + "]";
+	}
+	
+	//este es x objeto mmm
+	
+	public String consultaPedidoxId(Integer idPedido){
+		String resultado="[";
+		DBPedido dbpedido = new DBPedido();
+		
+		Pedido pe = new Pedido();
+		
+		pe = dbpedido.consultaPedidoxId(idPedido);
+			
+		resultado = resultado +  pe.toJsonCDPedido();
+			
+		
+		return resultado + "]";
 	}
 	
 }
