@@ -1,4 +1,4 @@
-package com.upse.entidades;
+package com.upse.servicio;
 
 import java.util.Date;
 
@@ -9,7 +9,7 @@ public class Pedido {
 	private double subtotal;
 	private double total_iva;
 	private double total;
-	private Usuario usuario;
+	
 	
 	public Pedido() {
 		super();
@@ -17,7 +17,7 @@ public class Pedido {
 	}
 
 	public Pedido(int idPedidos, int idUsuario, String fecha, double subtotal,
-			double total_iva, double total, Usuario usuario) {
+			double total_iva, double total) {
 		super();
 		this.idPedidos = idPedidos;
 		this.idUsuario = idUsuario;
@@ -25,7 +25,7 @@ public class Pedido {
 		this.subtotal = subtotal;
 		this.total_iva = total_iva;
 		this.total = total;
-		this.usuario = usuario;
+		
 	}
 
 	public int getIdPedidos() {
@@ -76,19 +76,5 @@ public class Pedido {
 		this.total = total;
 	}
 
-	public Usuario getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(Usuario usuario) {
-		this.usuario = usuario;
-	}
-	
-	public String toJsonCDPedido() {
-		return "{'idPedidos':" + idPedidos + ", 'usuario':" + usuario.toJsonCDUsuario()
-				+ ", 'fecha':'" + fecha + "', 'subtotal':" + subtotal 
-				+ ", 'total_iva':" + total_iva + ", 'total':" + total + "}";
-	}
-	
-	
+		
 }

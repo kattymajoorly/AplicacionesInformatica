@@ -90,8 +90,8 @@ public class loginUsuarioControlador extends GenericForwardComposer<Component> {
 			
 			//redireccionar a la pagina principal 
 			//Executions.sendRedirect("inicioBienvenido.zul");
-			Executions.sendRedirect("guardarPedido.zul");
-			
+			//Executions.sendRedirect("guardarPedido.zul");
+			Executions.sendRedirect("inicioBienvenido.zul");
 			
 		}else{
 			mensaje="Usuario y/o clave incorrecta";

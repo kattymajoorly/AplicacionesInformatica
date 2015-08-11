@@ -1,4 +1,4 @@
-package com.upse.entidades;
+package com.upse.servicio;
 
 public class Persona {
 	

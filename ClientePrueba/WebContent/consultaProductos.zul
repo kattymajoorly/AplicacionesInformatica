@@ -10,7 +10,7 @@ apply ="com.upse.controlador.consultaproductosControlador">
 		id="buttonBusqueda">
 
 		</button>
-	</groupbox>
+</groupbox>
 	
 	</window>
 </zk>

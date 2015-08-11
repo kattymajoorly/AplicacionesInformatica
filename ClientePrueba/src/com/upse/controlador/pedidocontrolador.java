@@ -27,12 +27,16 @@ import org.zkoss.zul.ListModelList;
 import org.zkoss.zul.Listbox;
 import org.zkoss.zul.Messagebox;
 import org.zkoss.zul.Textbox;
+import org.zkoss.zul.Window;
 
 import com.upse.servicio.Categoria;
 import com.upse.servicio.DetallePedido;
+import com.upse.servicio.Pedido;
+import com.upse.servicio.Persona;
 import com.upse.servicio.Productos;
 import com.upse.servicio.ServicioWebServiceLocator;
 import com.upse.servicio.ServicioWebSoapBindingStub;
+import com.upse.servicio.Usuario;
 
 
 
@@ -40,7 +44,7 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 
 	@Wire
 	Listbox	 listboxPedido;
-	Label lbl_cliente, lbl_fecha, lbl_totalproducto, lbl_precio,lbl_subtotal,lbl_iva,lbl_total;
+	Label lbl_cliente, lbl_cedula, lbl_fecha, lbl_totalproducto, lbl_precio,lbl_subtotal,lbl_iva,lbl_total;
 	Button btnAnadir, btnGuardar;
 	Textbox textbox_cantidad;
 	Combobox cmbProductos;
@@ -48,6 +52,7 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 	ArrayList<DetallePedido> listDetallePedido = new ArrayList<DetallePedido>();
 	ArrayList<DetallePedido> ldp;
 	Integer id_usuario;
+	Window factura;
 
 	@Override
 	public void doAfterCompose(Component comp) throws Exception {
@@ -67,6 +72,7 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 			String nombres = session.getAttribute("nombreU") +" "+session.getAttribute("apellidoU");
 			lbl_cliente.setValue(nombres);
 			lbl_fecha.setValue(getFechaActual());
+			
 				
 		}else{
 			//no se ha logoneado o no existe la autentificacion
@@ -96,8 +102,8 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 					productos.setIdProductos(idProductos);
 					productos.setEstado("A");
 					productos.setNombre_producto(nombre_producto);
-					productos.setPrecio(precio);
 									
+					productos.setPrecio(precio);
 					
 					listProductos.add(productos);
 				}
@@ -245,9 +251,6 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 			Messagebox.show("Cantidad sobrepasa el stock", "Error", Messagebox.OK, Messagebox.ERROR);
 		}
 		
-		
-		
-		
 	}
 	
 	
@@ -326,6 +329,154 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 	}
 	
 	
+	//para llamar a la ventana
+	public void onCreate$factura(){
+		String opciones;
+		Integer idPedido;
+		Session session = Sessions.getCurrent();
+		//2.Leer atributo almacenado en la sesion
+		//convertir a objeto generico de usuario
+		
+		opciones = (String) session.getAttribute("opcion");
+		idPedido = (Integer) session.getAttribute("idPedido");
+		
+		if(opciones!=null){
+			if(opciones.equalsIgnoreCase("nuevo")){
+				cmbProductos.setDisabled(false);
+				btnAnadir.setDisabled(false);
+				btnGuardar.setDisabled(false);
+				textbox_cantidad.setDisabled(false);	
+								
+			}else{
+				cargarFactura(idPedido);
+				//cargarDetalle();
+				cmbProductos.setDisabled(true);
+				btnAnadir.setDisabled(true);
+				btnGuardar.setDisabled(true);
+				textbox_cantidad.setDisabled(true);			
+			}
+				
+		}
+	}
+	
+
+	
+	public void cargarFactura(Integer id){
+		String respuesta="";
+		ServicioWebSoapBindingStub servicioprueba;
+			try {
+				servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+				respuesta = servicioprueba.consultaPedidoxId(id);
+								
+				JSONArray jsonn;
+				try {
+					Integer  idPedido, idProductos, cantidad;
+					String fecha="", nombres="", apellidos="", cedula="", nombre_producto="";
+					Double subtotal=null,total_iva=null,total=null, subtotalde=null, precio=null;
+				
+					jsonn = new JSONArray(respuesta);
+					for (int i=0 ;i< jsonn.length(); i++){
+						
+						nombres = jsonn.getJSONObject(i).getJSONObject("usuario").getJSONObject("persona").getString("nombres");
+						apellidos = jsonn.getJSONObject(i).getJSONObject("usuario").getJSONObject("persona").getString("apellidos");
+						cedula = jsonn.getJSONObject(i).getJSONObject("usuario").getJSONObject("persona").getString("cedula");
+						fecha = jsonn.getJSONObject(i).getString("fecha");
+						idPedido = jsonn.getJSONObject(i).getInt("idPedidos");
+						subtotal =  jsonn.getJSONObject(i).getDouble("subtotal");
+						total =  jsonn.getJSONObject(i).getDouble("total");
+						total_iva =  jsonn.getJSONObject(i).getDouble("total_iva");
+					}
+					alert("nombre: "+nombres+" - total: "+total);
+					String nombresC= ""+nombres+" - "+ apellidos; 
+					lbl_cliente.setValue(nombresC);
+					lbl_fecha.setValue(fecha);
+					lbl_subtotal.setValue(""+subtotal);
+					lbl_iva.setValue(""+total_iva);
+					lbl_total.setValue(""+total);
+
+					
+				}catch (JSONException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}		
+			cargarDetalle(id);
+	}
+	
+	public void cargarDetalle(Integer idPedido){
+		String respuesta="";
+		ServicioWebSoapBindingStub servicioprueba;
+		ArrayList<DetallePedido> listPedido = null;
+		
+		listPedido = new ArrayList<DetallePedido>();
+			try {
+				servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+				respuesta = servicioprueba.consultaPedidoxDetalle(6);
+				alert(respuesta);
+				/*
+				JSONArray jsonn=null;
+				try {
+					Integer  idPedidos, idProductos, cantidad;
+					String nombre_producto="";
+					Double subtotalde=null, precio=null;
+					
+					jsonn = new JSONArray(respuesta);
+					System.out.println(jsonn);
+					
+					
+					for (int i=0 ;i< jsonn.length(); i++){
+						
+						//idPedidos = jsonn.getJSONObject(i).getInt("idPedidos");
+						//idProductos = jsonn.getJSONObject(i).getJSONObject("productos").getInt("idProductos");
+												
+						nombre_producto = jsonn.getJSONObject(i).getJSONObject("productos").getString("nombre_producto");
+						precio = jsonn.getJSONObject(i).getJSONObject("productos").getDouble("precio");
+						cantidad = jsonn.getJSONObject(i).getInt("cantidad");
+						subtotalde = jsonn.getJSONObject(i).getDouble("subtotal");
+															
+						DetallePedido detalle = new DetallePedido();
+						//detalle.setIdPedidos(idPedidos);
+						detalle.setCantidad(cantidad);
+						detalle.setNombre_producto(nombre_producto);
+						//detalle.setIdProductos(idProductos);
+						detalle.setPrecio(precio);
+						detalle.setSubtotal(subtotalde);	
+						listPedido.add(detalle);
+					
+					}
+								
+				}catch (JSONException e) {
+					// TODO Auto-generated catchck
+					e.printStackTrace();
+				}*/
+				
+			} catch (MalformedURLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ServiceException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (RemoteException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} 
+			
+			
+			//ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listPedido);
+			//listboxPedido.setModel(modeloDeDatos);
+		
+	}
 
 	
 }

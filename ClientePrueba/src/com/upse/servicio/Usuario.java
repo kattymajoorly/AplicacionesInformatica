@@ -1,4 +1,4 @@
-package com.upse.entidades;
+package com.upse.servicio;
 
 public class Usuario {
 	
@@ -7,7 +7,7 @@ public class Usuario {
 	private int idPersona;
 	private String estado;
 	private Persona persona;
-	private TipoUsuario tipousuario;
+	//private TipoUsuario tipousuario;
 	
 	public Usuario() {
 		super();
@@ -15,14 +15,14 @@ public class Usuario {
 	}
 
 	public Usuario(int idUsuario, int idTipoUsuario, int idPersona,
-			String estado, Persona persona, TipoUsuario tipousuario) {
+			String estado, Persona persona) {
 		super();
 		this.idUsuario = idUsuario;
 		this.idTipoUsuario = idTipoUsuario;
 		this.idPersona = idPersona;
 		this.estado = estado;
 		this.persona = persona;
-		this.tipousuario = tipousuario;
+		
 	}
 
 	public int getIdUsuario() {
@@ -65,14 +65,7 @@ public class Usuario {
 		this.persona = persona;
 	}
 
-	public TipoUsuario getTipousuario() {
-		return tipousuario;
-	}
-
-	public void setTipousuario(TipoUsuario tipousuario) {
-		this.tipousuario = tipousuario;
-	}
-	
+		
 	
 	public String toJsonCDUsuario(){
 		return "{'idUsuario':" + idUsuario + ", 'persona':" + persona.toJsonCDPersona() + "}"; 

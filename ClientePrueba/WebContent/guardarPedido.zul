@@ -1,6 +1,6 @@
 <?page title="new page title" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="new page title" border="none" width="90%" height="90%"
+<window title="new page title" id="factura" border="none" width="90%" height="90%"
 apply ="com.upse.controlador.pedidocontrolador">
 <groupbox closable="true">
 <grid width="90%">
@@ -9,6 +9,7 @@ apply ="com.upse.controlador.pedidocontrolador">
 		<label value="Cliente:" />
 		<label  value="" id="lbl_cliente"/>
 	</row>
+	
 	<row>
 		<label value="Fecha:" />
 		<label  value="" id="lbl_fecha"/>

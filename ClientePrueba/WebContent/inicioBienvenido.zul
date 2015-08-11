@@ -1,12 +1,23 @@
 <?page title="Inicio" contentType="text/html;charset=UTF-8"?>
 <zk>
-<window title="Inicio" border="normal">
-<grid width="80%">
-<rows>
-	<row>
-		<label value= "Bienvenidos a la Prueba del inicio de Sesion"/>
-	</row>
-</rows>
-</grid>
+<window title="Inicio" border="none" width="50%" height="50%"
+apply ="com.upse.controlador.inicioControlador">
+
+<groupbox closable="true">
+		<caption label="Guardar Pedido"></caption> 
+		<label value="Guardar Pedido" />
+		<button image="images/key.png" label="Guardar" 
+		id="buttonBusquedaGuardar">
+		</button>
+</groupbox>
+
+<groupbox closable="true">
+		<caption label="Consulta Pedido"></caption> 
+		<label value="Consultar Pedido" />
+		<button image="images/searchs.png" label="Buscar" 
+		id="buttonBusquedaConsulta">
+		</button>
+</groupbox>
+
 </window>
 </zk>

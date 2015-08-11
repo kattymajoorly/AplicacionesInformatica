@@ -1,0 +1,43 @@
+<?page title="Consulta Pedido" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="Consulta Pedido" border="none" width="90%" height="90%"
+apply ="com.upse.controlador.consultaPedidoControlador">
+
+
+
+<groupbox closable="true">
+		<label value="Estado:" />
+		<combobox autocomplete="true" id="cmbEstado"  width="100px">
+				<template name="model">
+				<comboitem label="${each.estados}" value="${each.idEstado}" />
+				</template>
+		</combobox>
+		<button image="images/searchs.png" label="Buscar" 
+		id="buttonBusqueda"></button>
+</groupbox>
+
+
+		
+		<listbox mold="paging" pageSize="3" width="100%" 
+	emptyMessage="No Existen Registros" id="listboxPedido" >
+	<listhead sizable="true" menupopup="auto">
+		<listheader label="Num de Factura" sort="auto(idConsulta)"/>
+		<listheader label="Fecha" sort="auto(fecha)" />
+		<listheader label="Total Factura" sort="auto(total)" />
+	</listhead>
+	<template name="model">
+	<listitem value="${each}">
+		<listcell label="${each.idConsulta}"/>
+		<listcell label="${each.fecha}" />
+		<listcell label="${each.total}" />
+	</listitem>
+	</template>
+	</listbox>
+	
+	<button image="images/searchs.png" label="Ver Factura" 
+		id="buttonFactura"></button>
+	
+	
+	
+</window>
+</zk>
