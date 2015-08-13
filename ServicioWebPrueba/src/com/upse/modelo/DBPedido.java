@@ -434,7 +434,7 @@ public class DBPedido {
 			
 			sql = "select pro.nombre_producto, det.cantidad, pro.precio, det.subtotal" +
 				  " from pedidos pe inner join detallepedido det on pe.id_pedidos = det.id_pedidos inner join productos pro on det.id_productos = pro.id_productos" +
-				  " where det.id_pedidos='"+ idPedido+"'";
+				  " where det.id_pedidos="+idPedido+"";
 			/*sql = w"select pro.nombre_producto, pro.descripcion, det.cantidad, pro.precio, det.subtotal " +
 					"from detallepedido det inner join productos pro on det.id_productos = pro.id_productos " +
 					"where det.id_pedidos='"+ idPedido+"'";*/
@@ -459,15 +459,15 @@ public class DBPedido {
 				Productos listaProducto = new Productos();
 				DetallePedido listadetalle = new DetallePedido();
 				
+				//listaProducto.setIdProductos(1);
 				listaProducto.setNombre_producto(resultados.getString("nombre_producto"));
-				//listaProducto.setDescripcion(resultados.getString("descripcion"));
+				//listaProducto.setDescripcion("");
 				listaProducto.setPrecio(resultados.getDouble("precio"));
-				listadetalle.setProductos(listaProducto);
 				
-				listadetalle.setCantidad(resultados.getInt("cantidad"));
-				listadetalle.setSubtotal(resultados.getDouble("subtotal"));
 				listadetalle.setProductos(listaProducto);
-																						
+				listadetalle.setCantidad(resultados.getInt("cantidad"));
+				listadetalle.setSubtotal(resultados.getDouble("subtotal"));	
+				
 				lista.add(listadetalle);
 			}
 		}catch (SQLException e) {
