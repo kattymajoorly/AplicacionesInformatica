@@ -71,6 +71,34 @@ public void doAfterCompose(Component comp) throws Exception {
 	cmb_imagen.setModel(modeloDeDatos);
 }
 
+public void onSelect$cmb_imagen(){
+	Integer idProducto;
+	String respuesta;
+	ServicioWebSoapBindingStub servicioprueba;
+	idProducto =cmb_imagen.getSelectedItem().getValue();
+	try {
+		servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+		respuesta = servicioprueba.consultarImagen(idProducto);
+		//alert("/images/"+respuesta);
+		//imagen.setSrc();
+		imagenPrueba.setSrc("/images/"+respuesta);
+		imagenPrueba.setWidth("150px");
+		imagenPrueba.setHeight("150px");
+		imagenPrueba.setVisible(true);
+	} catch (MalformedURLException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (ServiceException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	} catch (RemoteException e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+	}
+	
+	
+}
+
 
 
 }
