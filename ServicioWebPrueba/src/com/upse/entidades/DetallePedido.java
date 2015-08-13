@@ -67,12 +67,15 @@ public class DetallePedido {
 	}
 	
 	
-	public String toJsonCDPedido() {
-		return "{'idDetallePedido':" + idDetallePedido + ", 'productos':" + productos.toJsonCDProducto() 
-				+ ", 'cantidad':" + cantidad + ", 'subtotal':" + subtotal + "}";
+	public String toJsonCDPedidoDe() {
+		return "{'idDetallePedido':" + idDetallePedido + ", 'productos':" + productos.toJsonCDProductoDet() + 
+				", 'cantidad':" + cantidad + ", 'subtotal':" + subtotal + "}";
 	}	
 	
-	
+	public String toJsonConsultaDetPedido() {
+		return "{'productos':" + productos.toJsonCDProductoDet() + 
+				", 'cantidad':" + cantidad + ", 'subtotal':" + subtotal + "}";
+	}
 	
 	
 	

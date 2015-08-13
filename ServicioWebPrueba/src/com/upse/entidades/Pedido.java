@@ -90,5 +90,9 @@ public class Pedido {
 				+ ", 'total_iva':" + total_iva + ", 'total':" + total + "}";
 	}
 	
+	public String toJsonCDPedidoDetalle() {
+		return "{'idPedidos':" + idPedidos + "}";
+	}
+	
 	
 }
