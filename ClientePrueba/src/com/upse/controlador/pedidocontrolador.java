@@ -37,6 +37,7 @@ import com.upse.servicio.Productos;
 import com.upse.servicio.ServicioWebServiceLocator;
 import com.upse.servicio.ServicioWebSoapBindingStub;
 import com.upse.servicio.Usuario;
+import com.upse.servicio.datosConsultaPedido;
 
 
 
@@ -58,7 +59,7 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 	public void doAfterCompose(Component comp) throws Exception {
 		// TODO Auto-generated method stub
 		super.doAfterCompose(comp);
-		
+	
 		//LEER LA SESION
 		//1.Obtener la session
 		Session session = Sessions.getCurrent();
@@ -349,7 +350,7 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 								
 			}else{
 				cargarFactura(idPedido);
-				//cargarDetalle();
+				cargarDetalle(idPedido);
 				cmbProductos.setDisabled(true);
 				btnAnadir.setDisabled(true);
 				btnGuardar.setDisabled(true);
@@ -370,9 +371,9 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 								
 				JSONArray jsonn;
 				try {
-					Integer  idPedido, idProductos, cantidad;
-					String fecha="", nombres="", apellidos="", cedula="", nombre_producto="";
-					Double subtotal=null,total_iva=null,total=null, subtotalde=null, precio=null;
+					Integer  idPedido;
+					String fecha="", nombres="", apellidos="", cedula="";
+					Double subtotal=null,total_iva=null,total=null;
 				
 					jsonn = new JSONArray(respuesta);
 					for (int i=0 ;i< jsonn.length(); i++){
@@ -394,6 +395,9 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 					lbl_iva.setValue(""+total_iva);
 					lbl_total.setValue(""+total);
 
+					//respuesta = servicioprueba.consultaPedidoxDetalleLista(6);
+					//System.out.printf(respuesta);
+					//alert("Detalle: "+respuesta);
 					
 				}catch (JSONException e) {
 					// TODO Auto-generated catch block
@@ -414,69 +418,69 @@ public class pedidocontrolador extends GenericForwardComposer<Component> {
 			cargarDetalle(id);
 	}
 	
-	public void cargarDetalle(Integer idPedido){
+	
+	public void cargarDetalle(Integer id){
+		
 		String respuesta="";
 		ServicioWebSoapBindingStub servicioprueba;
-		ArrayList<DetallePedido> listPedido = null;
-		
-		listPedido = new ArrayList<DetallePedido>();
-			try {
-				servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
-				respuesta = servicioprueba.consultaPedidoxDetalle(6);
-				alert(respuesta);
-				/*
-				JSONArray jsonn=null;
-				try {
-					Integer  idPedidos, idProductos, cantidad;
-					String nombre_producto="";
-					Double subtotalde=null, precio=null;
-					
-					jsonn = new JSONArray(respuesta);
-					System.out.println(jsonn);
-					
-					
-					for (int i=0 ;i< jsonn.length(); i++){
-						
-						//idPedidos = jsonn.getJSONObject(i).getInt("idPedidos");
-						//idProductos = jsonn.getJSONObject(i).getJSONObject("productos").getInt("idProductos");
-												
-						nombre_producto = jsonn.getJSONObject(i).getJSONObject("productos").getString("nombre_producto");
-						precio = jsonn.getJSONObject(i).getJSONObject("productos").getDouble("precio");
-						cantidad = jsonn.getJSONObject(i).getInt("cantidad");
-						subtotalde = jsonn.getJSONObject(i).getDouble("subtotal");
-															
-						DetallePedido detalle = new DetallePedido();
-						//detalle.setIdPedidos(idPedidos);
-						detalle.setCantidad(cantidad);
-						detalle.setNombre_producto(nombre_producto);
-						//detalle.setIdProductos(idProductos);
-						detalle.setPrecio(precio);
-						detalle.setSubtotal(subtotalde);	
-						listPedido.add(detalle);
-					
-					}
-								
-				}catch (JSONException e) {
-					// TODO Auto-generated catchck
-					e.printStackTrace();
-				}*/
 				
-			} catch (MalformedURLException e) {
+		try {
+			servicioprueba = (ServicioWebSoapBindingStub) new ServicioWebServiceLocator().getServicioWeb(new URL("http://localhost:8080/ServicioWebPrueba/services/ServicioWeb"));
+			respuesta = servicioprueba.consultaPedidoxDetalleLista(id);
+			
+			ArrayList<DetallePedido> listPedido = null;
+			
+			listPedido = new ArrayList<DetallePedido>();	
+			JSONArray jsonn=null;
+			try {
+				jsonn = new JSONArray(respuesta);
+				for (int i=0 ;i< jsonn.length(); i++){
+					
+					DetallePedido detalle = new DetallePedido();
+					
+					String nombre_producto = jsonn.getJSONObject(i).getJSONObject("productos").getString("nombre_producto");
+					Double precio = jsonn.getJSONObject(i).getJSONObject("productos").getDouble("precio");
+					Integer cantidad = jsonn.getJSONObject(i).getInt("cantidad");
+					Double subtotalde = jsonn.getJSONObject(i).getDouble("subtotal");
+					
+					detalle.setNombre_producto(nombre_producto);
+					detalle.setPrecio(precio);
+					detalle.setCantidad(cantidad);
+					detalle.setSubtotal(subtotalde);
+					
+									
+					listPedido.add(detalle);
+				}
+			} catch (JSONException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} catch (ServiceException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (RemoteException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} 
+			}
 			
+
+			ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listPedido);
+			listboxPedido.setModel(modeloDeDatos);
 			
-			//ListModelList<DetallePedido> modeloDeDatos = new ListModelList<DetallePedido>(listPedido);
-			//listboxPedido.setModel(modeloDeDatos);
+					
 		
+		
+		} catch (RemoteException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ServiceException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
 	}
+	
+	
+	
+				
+}
 
 	
-}
+

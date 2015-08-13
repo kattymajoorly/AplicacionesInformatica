@@ -1,0 +1,15 @@
+<?page title="new page title" contentType="text/html;charset=UTF-8"?>
+<zk>
+<window title="new page title" border="normal" height="100%" apply="com.upse.controlador.consultaImagenControlador">
+<combobox id="cmb_imagen" autodrop="true" mold="rounded">
+				<template name="model">
+					<comboitem label="${each.nombre_producto}"
+						value="${each.idProductos}" />
+
+				</template>
+			</combobox>
+<separator></separator>
+<image id="imagenPrueba" ></image>
+<label id="lblImagen"></label>
+</window>
+</zk>
