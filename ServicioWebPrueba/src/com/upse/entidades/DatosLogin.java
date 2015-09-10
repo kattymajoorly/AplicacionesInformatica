@@ -6,17 +6,21 @@ public class DatosLogin {
 	private String apellidos;
 	private String cedula;
 	private String telefono;
+	private String email;
+	private String direccion;
 	private String alias;
 	private int id_usuario;
 	
 	
 	public DatosLogin(String nombres, String apellidos, String cedula,
-			String telefono, String alias, int id_usuario) {
+			String telefono, String email, String direccion, String alias, int id_usuario) {
 		super();
 		this.nombres = nombres;
 		this.apellidos = apellidos;
 		this.cedula = cedula;
 		this.telefono = telefono;
+		this.email = email;
+		this.direccion = direccion;
 		this.alias = alias;
 		this.id_usuario = id_usuario;
 	}
@@ -86,6 +90,28 @@ public class DatosLogin {
 	public void setId_usuario(int id_usuario) {
 		this.id_usuario = id_usuario;
 	}
+
+
+	public String getEmail() {
+		return email;
+	}
+
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+	
+	
 
 
 }

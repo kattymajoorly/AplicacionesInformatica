@@ -88,11 +88,9 @@ public class Pedido {
 		return "{'idPedidos':" + idPedidos + ", 'usuario':" + usuario.toJsonCDUsuario()
 				+ ", 'fecha':'" + fecha + "', 'subtotal':" + subtotal 
 				+ ", 'total_iva':" + total_iva + ", 'total':" + total + "}";
-	}
+	}	
 	
 	public String toJsonCDPedidoDetalle() {
 		return "{'idPedidos':" + idPedidos + "}";
 	}
-	
-	
 }

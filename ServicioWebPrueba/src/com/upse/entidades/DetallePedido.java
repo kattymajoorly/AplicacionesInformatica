@@ -76,8 +76,5 @@ public class DetallePedido {
 		return "{'productos':" + productos.toJsonCDProductoDet() + 
 				", 'cantidad':" + cantidad + ", 'subtotal':" + subtotal + "}";
 	}
-	
-	
-	
-	
+		
 }
